@@ -1,0 +1,510 @@
+/* variables */
+
+:root {
+	--text-link-color: #da5437;
+	--text-link-color-hover: #572708;
+	--text-emphasis-color: #572708;
+	--text-normal-color: black;
+
+	--background-color: #f6ae63;
+	--sitenav-background-color: #572708;
+
+	--menu-separator-character: "|";
+}
+
+/* grids */
+body {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(5, auto);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"header"
+		"page"
+		"about"
+		"interactions"
+		"footer";
+}
+
+.header {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(3, min-content);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		". language ."
+		". logo ."
+		"sitenav sitenav sitenav";
+	grid-area: header;
+}
+
+#comicpage,
+.page > div,
+.header > div,
+.about,
+.footer {
+	display: -webkit-flex;
+	display: flex;
+	justify-content: center;
+}
+
+.language {
+	grid-area: language;
+}
+
+.logo {
+	grid-area: logo;
+}
+
+.sitenav {
+	grid-area: sitenav;
+	width: 100%;
+}
+
+.page {
+	display: grid;
+	grid-template-columns: min-content 1fr min-content;
+	grid-template-rows: repeat(3, auto);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		". pagenav_top ."
+		". page_img ."
+		". pagenav_bottom .";
+	grid-area: page;
+}
+
+.pagenav_top {
+	grid-area: pagenav_top;
+}
+
+.pagenav_bottom {
+	grid-area: pagenav_bottom;
+}
+
+.page_img {
+	grid-area: page_img;
+}
+
+.about {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas: ". author .";
+	grid-area: about;
+}
+
+.author {
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	grid-template-rows: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas: "notes links";
+	grid-area: author;
+}
+
+.notes {
+	grid-area: notes;
+}
+
+.links {
+	grid-area: links;
+}
+
+.interactions {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(3, auto);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		". disqus ."
+		". chimera ."
+		". mailchimp .";
+	grid-area: interactions;
+}
+
+.disqus {
+	grid-area: disqus;
+}
+
+.chimera {
+	grid-area: chimera;
+}
+
+.mailchimp {
+	grid-area: mailchimp;
+}
+
+.footer {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-rows: min-content;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas: "socials . copyright";
+	grid-area: footer;
+}
+
+.socials {
+	grid-area: socials;
+}
+
+.copyright {
+	grid-area: copyright;
+}
+
+.ninepatch {
+  margin:10px;
+  background-color: var(--sitenav-background-color);
+  border-image: url(/img/box.9.png) 20 20 20 20 fill round;
+  border-image-width: 15px;
+  border-image-outset: 9px;
+}
+
+/* old */
+
+/* universal background color */
+body {
+	background-color: var(--background-color);
+}
+
+/* logo */
+
+.logo img {
+	width: 100%;
+	max-width: 500px;
+}
+
+/* header separator */
+.header a:not(:last-child)::after {
+	content: "|";
+	padding: 0 10px;
+}
+
+/* site navigation */
+.sitenav {
+	background-color: var(--sitenav-background-color);
+}
+
+/* clearfix hack to prevent image overflow. check out the W3Schools page on it. */
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+/*FONTS*/
+
+/* emphasis font */
+.header,
+.links,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: "Gabriela", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* body font */
+.notes,
+p,
+footer {
+	font-family: "EB Garamond", serif;
+	font-size: 16pt;
+	font-weight: weight;
+	font-style: normal;
+	color: var(--text-normal-color);
+}
+
+.sitenav {
+	font-size: 30px;
+}
+
+.links {
+	display: grid;
+}
+
+.author,
+.links {
+	width: fit-content;
+}
+
+.notes {
+	min-width: 200px;
+	max-width: 450px;
+}
+
+.notes,
+.links a {
+	padding: 2px;
+}
+
+.links a {
+	font-size: 26px;
+	color: var(--text-emphasis-color);
+	text-align: center;
+}
+
+.footer {
+	color: var(--text-link-color);
+	background-color: var(--sitenav-background-color);
+	align-items: center;
+}
+
+.socials {
+	padding: 0 12px;
+}
+
+.socials span {
+	font-size: 26px;
+}
+
+.socials a {
+	padding: 0 2px;
+}
+
+.socials a::before {
+	content: "•";
+	padding: 0 2px;
+}
+
+.copyright {
+	text-align-last: right;
+}
+
+.copyright img {
+	mix-blend-mode: color-burn;
+	width: 200px;
+	padding: 8px;
+}
+
+/* STYLING FOR SUBPAGES (about, characters, etc) */
+
+/*general*/
+
+.subPage {
+	width: 1000px;
+	max-width: 98%;
+	background-color: #fcf7eb;
+	outline: 3px solid #552607;
+	margin: auto;
+	margin-bottom: 10px;
+	padding: 0px 12px 12px;
+}
+
+.subPage:not(.archivePage) {
+	text-align: center;
+}
+
+/* for pictures displayed to the left */
+.leftPic {
+	clear: left;
+	float: right;
+	margin-left: 20px;
+}
+
+/* for pictures displayed to the left */
+.rightPic {
+	clear: right;
+	float: left;
+	margin-left: 20px;
+}
+
+/* specific to Characters */
+.charTable,
+.charTable td {
+	width: 100%;
+}
+
+/* link colors */
+a {
+	color: var(--text-link-color);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--text-link-color-hover);
+}
+
+/* HEADER */
+header #nav {
+	background-color: #ffcd7e;
+	outline: 3px solid #ffcd7e;
+	font-size: 30px;
+	width: 98%;
+	margin: auto;
+}
+
+/* HOMEPAGE */
+
+/* style nav button images */
+.pagenav {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 0px;
+}
+
+.nav_button {
+	padding: 0 10px;
+}
+
+.nav_button img {
+	width: 50px;
+}
+
+.nav_button.nav_last img,
+.nav_button.nav_next img {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+/* style comic page image */
+#comicPage img {
+	width: 1000px;
+	max-width: 100%;
+	box-shadow: 1px 1px 4px var(--sitenav-background-color);
+}
+
+/* Columns css */
+* {
+	box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+	float: left;
+	padding: 5px;
+	min-height: 300px;
+}
+
+.left {
+	width: 70%;
+}
+
+.right {
+	width: 30%;
+}
+.row {
+	max-width: 1000px;
+}
+
+/* style author notes */
+#authorNotes {
+	background-color: #fcf7eb;
+	outline: 3px solid #552607;
+	margin: 5px;
+	margin-left: 10px;
+	padding: 20px;
+	padding-top: 2px;
+	width: 1000px;
+	min-height: 409px;
+	max-width: 100%;
+	text-align: left;
+}
+
+/*style column buttons */
+.CollumnButtons {
+	text-align: center;
+	margin: 5px;
+}
+
+/*DISQUS COMMENT SECTION*/
+.comments {
+	text-align: center;
+	margin-top: 20px;
+	max-width: 1000px;
+}
+
+/* ARCHIVE PAGE */
+
+/* style table in which archive is displayed */
+.archiveTable {
+	width: 90%;
+	border-collapse: collapse;
+}
+
+/* style archive table cells */
+.archiveTable td {
+	padding: 3px;
+	vertical-align: center;
+}
+
+/* style table cell in which page title is displayed */
+.archiveCellTitle:not(.leftAlignTableText) {
+	max-width: 300px;
+	text-align: center;
+}
+
+.archiveCellDate {
+	text-align: right;
+	min-width: 120px;
+}
+
+.archiveCellNum {
+	text-align: center;
+	min-width: 30px;
+}
+
+/* style the thumbnails on the archive page */
+.archiveCellThumb {
+	width: 500px;
+	max-width: 60px;
+}
+.archiveCellThumb img {
+	max-width: 100%;
+}
+
+/* for left aligning the text in a table cell */
+.leftAlignTableText td {
+	text-align: left;
+}
+
+/* highlight a table row and make pointer into hand when moused over */
+.archiveRow:hover {
+	background-color: #f6ae63;
+	cursor: pointer;
+}
+
+/* FOOTER */
+
+footer {
+	color: #421a1a;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	float: none;
+	width: 100%;
+	font-size: 18px;
+	background-color: #ffcd7e;
+	text-align: center;
+	min-height: 150px;
+	padding-top: 0px;
+}
+
+footer p {
+	margin: auto;
+}
+
+footer a {
+	color: #572708;
+}
+
+footer a:hover {
+	color: #fcf7eb;
+}
+
+/* take away margins from the edges of the screen */
+html,
+body {
+	margin: 0;
+}

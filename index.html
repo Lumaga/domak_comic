@@ -1,0 +1,84 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=6" />
+	<title>Domak</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<!-- fonts I put -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gabriela&display=swap"
+		rel="stylesheet" />
+	<script src="js/main.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="language">
+			<a onclick="set_language('en')">English</a>
+			<a onclick="set_language('es')">Español</a>
+		</div>
+		<div class="logo">
+			<a href="index.html"><img src="img/logo.png" alt="Domak Logo" /></a>
+		</div>
+		<div class="sitenav">
+			<a href="index.html">Home</a>
+			<a href="archive.html">Archive</a>
+			<a href="characters.html">Characters</a>
+			<a href="about.html">About</a>
+		</div>
+	</div>
+	<div class="page">
+		<div class="pagenav pagenav_top">
+			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png"></a>
+			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png"></a>
+		</div>
+		<div class="page_img"></div>
+		<div class="pagenav pagenav_bottom">
+			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png"></a>
+			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png"></a>
+		</div>
+	</div>
+	<div class="about">
+		<div class="author">
+			<div class="notes ninepatch"></div>
+			<div class="links">
+				<a class="ninepatch" href="https://www.patreon.com/lumaga">Patreon</a>
+				<a class="ninepatch" href="https://discord.gg/QERZXpP">Discord</a>
+				<a class="ninepatch" href="https://vgen.co/Lumaga/shop">Shop</a>
+			</div>
+		</div>
+	</div>
+	<div class="interactions">
+		<div class="disqus"></div>
+		<div class="chimera"></div>
+		<div class="mailchimp"></div>
+	</div>
+	<div class="footer">
+		<div class="socials">
+			<span>Follow Lumaga on:</span><br />
+			<div>
+				<a href="https://discord.gg/QERZXpP">Discord</a>
+				<a href="https://www.instagram.com/lumaga_draws/">Instagram</a>
+				<a href="https://bsky.app/profile/lumaga.bsky.social">Bluesky</a>
+				<a href="https://www.twitch.tv/lumaga_draws">Twitch</a>
+				<a href="https://www.youtube.com/@LumagaDraws">YouTube</a>
+			</div>
+		</div>
+		<div class="copyright">
+			<span>Domak © Lumaga 2025</span><br />
+			<span><strong>This website is powered by</strong></span><br />
+			<a href="https://rarebit.neocities.org"><img src="img/rarebitlogo_small.png"></a>
+		</div>
+	</div>
+</body>
+
+</html>

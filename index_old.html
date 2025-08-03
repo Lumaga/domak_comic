@@ -1,0 +1,157 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Domak</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- fonts I put -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gabriela&display=swap" rel="stylesheet">
+    
+  </head>
+  <body>
+
+  <!-- most of the elements on these pages are defined in the js files as functions, then we tell these functions where to show up on the page by placing empty divs and naming those divs the name of the js functions. check the js files to edit these elements in more detail.-->
+
+  <div align="center">
+    <!-- header that has the logo image and top page navigation. don't forget to put this on every page -->
+    <div class="writeHeader"></div>
+
+    <!-- make sure that if you want to turn on automatically scrolling to the top of the comic when you load a new page, keep the id of this div and the variable "navScrollTo" in showcomic.js the same-->
+    <div id="showComic">
+
+      <!-- write the title of the page. -->
+      <div class="writePageTitle"></div>
+      <!-- write top navigation -->
+      <div class="writeNav"></div>
+      <!-- write the current page of your comic -->
+      <div class="writePageClickable"></div>
+      <!-- write bottom navigation -->
+      <div class="writeNav"></div>
+      
+    </div>
+  </div>
+  
+<div align="center">  
+
+<div class="row">
+  <div class="column left" style="background-color: transparent;">
+    <div id="authorNotes">
+    <h2>Author Notes</h2>
+    <!-- write the author notes for the current page-->
+    <div class="writeAuthorNotes"></div>
+  </div>
+  </div>
+  <div class="CollumnButtonsContainer" style="background-color: transparent;">
+    <!-- put the column 2 buttons here-->
+	
+	<a href="https://www.patreon.com/lumaga"><img src="img/link_patreon.png" class="CollumnButtons" alt="Patreon link" target="_blank"></a>
+	<a href="https://discord.gg/QERZXpP"><img src="img/link_discord.png" class="CollumnButtons" alt="Discord link" target="_blank"></a>
+	<a href="https://vgen.co/Lumaga/shop"><img src="img/link_shop.png" class="CollumnButtons" alt="Shop link" target="_blank"></a> 
+  </div>
+  
+  <div id="chimebar"></div>
+<script id="chimescript" type="module" src="https://chimeracomics.org/js/chimebar.js" mode="light"></script>
+
+</div>
+
+<!-- Disqus-->
+<div class="comments">
+<div id="disqus_thread"></div>
+</div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lumaga-draws.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+</div>
+
+<!-- Columns for the mailchimp thing-->
+<div class="row">
+  <div class="column left" style="background-color: transparent;">
+<!-- Mailchimp script-->
+<mailchimp>
+<div id="mc_embed_shell" align="right">
+      <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+        #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width: 400px; height: 300px; padding-top: 30px;}
+        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup" style= "background-color: transparent;">
+    <form action="https://neocities.us18.list-manage.com/subscribe/post?u=e511abd99416a9ddb0f48b1ae&amp;id=01816f95d8&amp;f_id=009ab2e6f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+        <div id="mc_embed_signup_scroll"><h2>Subscribe to Lumaga's newsletter</h2>
+            <div class="mc-field-group"><label for="mce-EMAIL">Email <span class="asterisk">*</span><i style="font-size:10px">(required)</i></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
+        <div id="mce-responses" class="clear foot">
+            <div class="response" id="mce-error-response" style="display: none;"></div>
+            <div class="response" id="mce-success-response" style="display: none;"></div>
+        </div>
+    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        /* real people should not fill this in and expect good things - do not remove this or risk form bot signups */
+        <input type="text" name="b_e511abd99416a9ddb0f48b1ae_01816f95d8" tabindex="-1" value="">
+    </div>
+        <div class="optionalParent">
+            <div class="clear foot">
+                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                <p style="margin: 0px auto;"><a href="http://eepurl.com/jd6FRI" title="Mailchimp: marketing por correo electrónico fácil y divertido"><span style="display: inline-block; background-color: transparent; border-radius: 4px;"><img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-dark.svg" alt="Intuit Mailchimp" style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;"></span></a></p>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[6]='COMPANY';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
+
+<!-- Mailchimp script end-->
+
+</div>
+</div>
+
+  
+  <div class="CollumnButtonsContainer" style="background-color: #FFCD7E; padding: 20px; margin-top: 20px;">
+      <h3>Follow Lumaga on:</h3>
+      <ul>
+      <h4>
+      <li><a href="https://discord.gg/QERZXpP">Discord</a></li>
+      <li><a href="https://www.instagram.com/lumaga_draws/">Instagram</a></li>
+      <li><a href="https://bsky.app/profile/lumaga.bsky.social">Bluesky</a></li>
+      <li><a href="https://www.twitch.tv/lumaga_draws">Twitch</a></li>
+      <li><a href="https://www.youtube.com/@LumagaDraws">YouTube</a></li>
+      </h4>
+      </ul>
+      
+      </div>
+
+<div align="center">
+
+
+<!-- footer that has a link back to rarebit, and ideally has copyright info and stuff. again, don't forget to put this on every page-->
+<div class="writeFooter"></div>
+
+<!-- Disqus script-->
+	<script id="dsq-count-scr" src="//lumaga-draws.disqus.com/count.js" async></script>
+	
+
+  <!-- really important- every js script is called here, be sure to always put them just before the closing body tag, use a defer attribute, and call them in this specific order.-->
+    <script src="js/comic_settings.js" defer></script>
+    <script src="js/comic_show.js" defer></script>
+    <script src="js/comic_header.js" defer></script>
+    <script src="js/comic_footer.js" defer></script>
+  </body>
+</html>
