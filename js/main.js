@@ -11,7 +11,7 @@ load_db().then((response) => {
     get_latest_page().then((response) => {
         console.log(response);
         current_page = JSON.parse(response);
-        write_page_clickable(".page_img", true);
+        write_page(true);
     });
 });
 
@@ -30,27 +30,14 @@ async function get_latest_page() {
         throw Error(response.statusText)
     }
     current_page_number = published_pages.published.length;
+    console.log("current page number: ", current_page_number)
     max_page_number = published_pages.published.length;
+    console.log("max page number: ", max_page_number)
     return response.text()
 }
 
-//SHOW COMIC PAGE, with clickable link
-function write_page_clickable(div, clickable) {
-    if (!clickable) {
-        //display comic page without link
-        document.querySelector(div).innerHTML = `<div id="comicpage"></div>`; 
-    } else if (current_page_number < max_page_number) { //check whether comic is on the last page
-        //display comic page and make it so that clicking it will lead you to the next page
-        document.querySelector(div).innerHTML = `<div><a id="comicpage" href="?pg=next_page"/></a></div>`; 
-    } else {
-        //display comic page without link
-        document.querySelector(div).innerHTML = `<div id="comicpage"></div>`; 
-    }
-    write_page();
-}
-
-//function used to split pages into multiple images if needed, and add alt text
-function write_page() {
+//function used to write comic page to web page
+function write_page(first_load) {
     const parent_node = document.getElementById("comicpage");
     let altText = ""; //variable for alt text
     let img_name;
@@ -85,6 +72,7 @@ function write_page() {
             author_notes.innerHTML = current_page.comment_en;
             break
     }
+    update_nav_options(first_load);
 }
 
 function set_language(lang) {
@@ -94,4 +82,61 @@ function set_language(lang) {
         current_langauge = "en";
     }
     write_page();
+}
+
+function toggle_scale_popout() {
+    const element = document.querySelector(".scale_selector");
+    element.classList.toggle("hide_scale_selector");
+}
+
+function set_page_scale(selection) {
+    const page_el = document.getElementById("comicpage");
+    switch (selection){
+        case "height":
+            page_el.classList.remove("fit_width", "fit_both");
+            page_el.classList.add("fit_height");
+            break
+        case "both":
+            page_el.classList.remove("fit_width", "fit_height");
+            page_el.classList.add("fit_both");
+            break
+        default:
+            page_el.classList.remove("fit_both", "fit_height");
+            page_el.classList.add("fit_width");
+            break
+    }
+    page_el.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelector(".scale_selector").classList.add("hide_scale_selector")
+}
+
+function update_nav_options(first_load) {
+    const nav_first = Array.from(document.querySelectorAll(".nav_first"));
+    const nav_prev = Array.from(document.querySelectorAll(".nav_prev"));
+    const nav_next = Array.from(document.querySelectorAll(".nav_next"));
+    const nav_last = Array.from(document.querySelectorAll(".nav_last"));
+    if (current_page_number == 1) {
+        for (el of nav_first.concat(nav_prev)) {
+            el.classList.add("hide_nav");
+        }
+        for (el of nav_last.concat(nav_next)) {
+            el.classList.remove("hide_nav");
+        }
+    } else if (current_page_number == max_page_number) {
+        for (el of nav_first.concat(nav_prev)) {
+            el.classList.remove("hide_nav");
+        }
+        for (el of nav_last.concat(nav_next)) {
+            el.classList.add("hide_nav");
+        }
+    } else {
+        for (el of nav_first.concat(nav_prev)) {
+            el.classList.remove("hide_nav");
+        }
+        for (el of nav_last.concat(nav_next)) {
+            el.classList.remove("hide_nav");
+        }
+    }
+    if (!first_load) {
+        document.getElementById("comicpage").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 }

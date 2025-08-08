@@ -2,7 +2,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=6" />
+	<meta name="viewport" content="width=550, initial-scale=1, maximum-scale=6" />
 	<title>Domak</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 	<!-- fonts -->
@@ -35,16 +35,24 @@
 	<div class="page">
 		<div class="pagenav pagenav_top">
 			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png"></a>
-			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png"></a>
-			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png"></a>
-			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png"></a>
+			<a class="nav_button nav_prev"  onclick="nav_to_prev_page()" ><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_next"  onclick="nav_to_next_page()" ><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_last"  onclick="nav_to_last_page()" ><img src="img/comicnav/nav_first.png"></a>
 		</div>
-		<div class="page_img"></div>
+		<div class="page_img">
+			<div class="scale_selector hide_scale_selector">
+				<toggle class="toggle" onclick="toggle_scale_popout()">Scale ⨞</toggle>
+				<div onclick="set_page_scale('width')">Width -</div>
+				<div onclick="set_page_scale('height')">Height -</div>
+				<div onclick="set_page_scale('both')">Both</div>
+			</div>
+			<div id="comicpage" class="fit_width" onclick="on_click_page()"></div>
+		</div>
 		<div class="pagenav pagenav_bottom">
 			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png"></a>
-			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png"></a>
-			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png"></a>
-			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png"></a>
+			<a class="nav_button nav_prev"  onclick="nav_to_prev_page()" ><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_next"  onclick="nav_to_next_page()" ><img src="img/comicnav/nav_previous.png"></a>
+			<a class="nav_button nav_last"  onclick="nav_to_last_page()" ><img src="img/comicnav/nav_first.png"></a>
 		</div>
 	</div>
 	<div class="about">
@@ -74,9 +82,7 @@
 			</div>
 		</div>
 		<div class="copyright">
-			<span>Domak © Lumaga 2025</span><br />
-			<span><strong>This website is powered by</strong></span><br />
-			<a href="https://rarebit.neocities.org"><img src="img/rarebitlogo_small.png"></a>
+			<span>Domak © Lumaga 2025</span>
 		</div>
 	</div>
 </body>
