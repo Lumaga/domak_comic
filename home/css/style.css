@@ -338,8 +338,9 @@ a {
 	text-decoration: none;
 }
 
+
 a:hover {
-	color: var(--text-link-color-hover);
+	opacity: .7;
 }
 
 /* HEADER */
@@ -463,6 +464,7 @@ header #nav {
 
 #comicPage {
 	box-shadow: 1px 1px 4px var(--sitenav-background-color);
+	min-height: 50vh;
 }
 
 #comicPage img {

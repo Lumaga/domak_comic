@@ -28,6 +28,7 @@ async function get_latest_page() {
 
 //function used to write comic page to web page
 function write_page(first_load) {
+	first_load = first_load || false;
 	const parent_node = document.getElementById("comicpage");
 	let altText = ""; //variable for alt text
 	let img_name;
@@ -63,8 +64,15 @@ function write_page(first_load) {
 			author_notes.innerHTML = current_page.comment_en;
 			break;
 	}
-	update_nav_options(first_load);
+	update_nav_options();
 	update_page_info();
+	if (!first_load) {
+		setTimeout(() => {
+			document
+				.getElementById("comicpage")
+				.scrollIntoView({ behavior: "smooth", block: "start" });
+		}, 250);
+	}
 }
 
 function set_language(lang) {
@@ -103,7 +111,7 @@ function set_page_scale(selection) {
 		.classList.add("hide_scale_selector");
 }
 
-function update_nav_options(first_load) {
+function update_nav_options() {
 	const nav_first = Array.from(document.querySelectorAll(".nav_first"));
 	const nav_prev = Array.from(document.querySelectorAll(".nav_prev"));
 	const nav_next = Array.from(document.querySelectorAll(".nav_next"));
@@ -130,17 +138,18 @@ function update_nav_options(first_load) {
 			el.classList.remove("hide_nav");
 		}
 	}
-	if (!first_load) {
-		document
-			.getElementById("comicpage")
-			.scrollIntoView({ behavior: "smooth", block: "start" });
-	}
 }
 
 function update_page_info() {
 	document.getElementById("current_page_number").innerHTML =
 		current_page_number;
 	document.getElementById("max_page_number").innerHTML = max_page_number;
+}
+
+function on_click_page() {
+	document
+		.getElementById("comicpage")
+		.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 async function set_current_page(page_num) {
@@ -158,7 +167,7 @@ function nav_to_first_page() {
 	set_current_page(1).then((response) => {
 		console.log(response);
 		current_page = JSON.parse(response);
-		write_page(true);
+		write_page();
 	});
 }
 
@@ -166,7 +175,7 @@ function nav_to_prev_page() {
 	set_current_page(current_page_number - 1).then((response) => {
 		console.log(response);
 		current_page = JSON.parse(response);
-		write_page(true);
+		write_page();
 	});
 }
 
@@ -174,7 +183,7 @@ function nav_to_next_page() {
 	set_current_page(current_page_number + 1).then((response) => {
 		console.log(response);
 		current_page = JSON.parse(response);
-		write_page(true);
+		write_page();
 	});
 }
 
@@ -182,6 +191,6 @@ function nav_to_last_page() {
 	set_current_page(max_page_number).then((response) => {
 		console.log(response);
 		current_page = JSON.parse(response);
-		write_page(true);
+		write_page();
 	});
 }
