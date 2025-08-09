@@ -163,7 +163,7 @@ body {
 .ninepatch {
 	margin: 10px;
 	background-color: var(--sitenav-background-color);
-	border-image: url(img/box.9.png) 20 20 20 20 fill round;
+	border-image: url(../img/box.9.png) 20 20 20 20 fill round;
 	border-image-width: 15px;
 	border-image-outset: 9px;
 }
