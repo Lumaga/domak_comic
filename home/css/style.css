@@ -163,7 +163,7 @@ body {
 .ninepatch {
 	margin: 10px;
 	background-color: var(--sitenav-background-color);
-	border-image: url(/img/box.9.png) 20 20 20 20 fill round;
+	border-image: url(img/box.9.png) 20 20 20 20 fill round;
 	border-image-width: 15px;
 	border-image-outset: 9px;
 }
@@ -421,7 +421,7 @@ header #nav {
 	transition: all 0.5s ease;
 	width: 220px;
 	height: 21px;
-	overflow-x: clip;
+	overflow-x: hidden;
 }
 
 .scale_selector > * {
@@ -432,7 +432,7 @@ header #nav {
 .scale_selector.hide_scale_selector {
 	width: 48px;
 	height: 21px;
-	overflow-x: clip;
+	overflow-x: hidden;
 }
 
 .scale_selector.hide_scale_selector toggle::after {
@@ -451,12 +451,22 @@ header #nav {
 }
 
 #comicPage {
-	width: calc(100vw - var(--scrollbar-width));
-	overflow-x: scroll;
+	max-width: calc(100vw - var(--scrollbar-width));
+	width: fit-content;
+	overflow-x: auto;
+	text-align: center;
+}
+
+.page_img {
+	place-self: center;
+}
+
+#comicPage {
+	box-shadow: 1px 1px 4px var(--sitenav-background-color);
 }
 
 #comicPage img {
-	box-shadow: 1px 1px 4px var(--sitenav-background-color);
+	/*box-shadow: 1px 1px 4px var(--sitenav-background-color);*/
 	width: auto;
 	height: auto;
 
@@ -464,19 +474,23 @@ header #nav {
 }
 
 #comicpage.fit_width img {
-	width: 100%;
+	width: calc(100vw - var(--scrollbar-width));
 	height: auto;
 }
 
+#comicpage.fit_height {
+	overflow-x: auto;
+}
+
 #comicpage.fit_height img {
-	height: 100vh;
+	height: calc(100vh - var(--scrollbar-width));
 	width: auto;
 }
 
 #comicpage.fit_both img {
-	max-width: 100%;
-	max-height: 100%;
-	width: 100%;
+	max-width: calc(100vw - var(--scrollbar-width));
+	max-height: 100vh;
+	width: auto;
 	height: auto;
 }
 
