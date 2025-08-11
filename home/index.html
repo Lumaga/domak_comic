@@ -1,139 +1,170 @@
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=550, initial-scale=1, maximum-scale=6"
-		/>
-		<title>Domak</title>
-		<link
-			href="css/style.css"
-			rel="stylesheet"
-			type="text/css"
-			media="all"
-		/>
-		<!-- fonts -->
-		<link rel="preconnect" href="https://fonts.gstatic.com" />
-		<!-- fonts I put -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gabriela&display=swap"
-			rel="stylesheet"
-		/>
-		<script src="js/main.js"></script>
-	</head>
 
-	<body>
-		<div class="header">
-			<div class="language">
-				<a onclick="set_language('en')">English</a>
-				<a onclick="set_language('es')">Español</a>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=.6, maximum-scale=6" />
+	<title>Domak</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<!-- fonts I put -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gabriela&display=swap"
+		rel="stylesheet" />
+	<script src="js/main.js"></script>
+	<script src="js/i18n.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="language">
+			<a onclick="set_language('en')">English</a>
+			<a onclick="set_language('es')">Español</a>
+		</div>
+		<div class="logo">
+			<a href="index.html"><img src="img/logo.png" alt="Domak Logo" /></a>
+		</div>
+		<div class="sitenav">
+			<a data-i18n="home_link" href="index.html">Home</a>
+			<a data-i18n="archive_link" href="archive.html">Archive</a>
+			<a data-i18n="about_link" href="about.html">About</a>
+		</div>
+	</div>
+	<div class="page">
+		<div class="pagenav pagenav_top">
+			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png" /></a>
+			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png" /></a>
+			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png" /></a>
+			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png" /></a>
+		</div>
+		<div class="page_img">
+			<div class="page_info">
+				<span data-i18n="page_number_label">Page</span><span id="current_page_number">1</span>/<span
+					id="max_page_number">2</span>
 			</div>
-			<div class="logo">
-				<a href="index.html"
-					><img src="img/logo.png" alt="Domak Logo"
-				/></a>
+			<div class="scale_selector hide_scale_selector">
+				<toggle data-i18n="options_scale" class="toggle" onclick="toggle_scale_popout()">Scale</toggle>
+				<div data-i18n="options_scale_width" onclick="set_page_scale('width')">Width</div>
+				<div data-i18n="options_scale_fit" onclick="set_page_scale('both')">Fit</div>
+				<div data-i18n="options_scale_original" onclick="set_page_scale('original')">Original</div>
 			</div>
-			<div class="sitenav">
-				<a href="index.html">Home</a>
-				<a href="archive.html">Archive</a>
-				<a href="characters.html">Characters</a>
-				<a href="about.html">About</a>
+			<div id="comicpage" class="fit_both ninepatch_paper" onclick="on_click_page()"
+				style="height:1412px;width:100vw;"></div>
+		</div>
+		<div class="pagenav pagenav_bottom">
+			<a class="nav_button nav_first" onclick="nav_to_first_page()"><img src="img/comicnav/nav_first.png" /></a>
+			<a class="nav_button nav_prev" onclick="nav_to_prev_page()"><img src="img/comicnav/nav_previous.png" /></a>
+			<a class="nav_button nav_next" onclick="nav_to_next_page()"><img src="img/comicnav/nav_previous.png" /></a>
+			<a class="nav_button nav_last" onclick="nav_to_last_page()"><img src="img/comicnav/nav_first.png" /></a>
+		</div>
+	</div>
+	<div class="about">
+		<div class="author">
+			<div class="notes ninepatch_box"></div>
+			<div class="links">
+				<a class="ninepatch_box" href="https://www.patreon.com/lumaga">Patreon</a>
+				<a class="ninepatch_box" href="https://discord.gg/QERZXpP">Discord</a>
+				<a class="ninepatch_box" href="https://vgen.co/Lumaga/shop">Shop</a>
 			</div>
 		</div>
-		<div class="page">
-			<div class="pagenav pagenav_top">
-				<a class="nav_button nav_first" onclick="nav_to_first_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-				<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_next" onclick="nav_to_next_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_last" onclick="nav_to_last_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-			</div>
-			<div class="page_img">
-				<div class="page_info">
-					Page<span id="current_page_number">1</span>/<span
-						id="max_page_number"
-						>2</span
-					>
+	</div>
+	<div class="interactions">
+		<div class="disqus comments ninepatch_paper">
+			<div id="disqus_thread"></div>
+		</div>
+		<div id="chimebar" class="chimera">
+			<script id="chimescript" dir="up" type="module" src="https://chimeracomics.org/js/chimebar.js"
+				mode="light"></script>
+		</div>
+		<div class="mailchimp">
+			<mailchimp>
+				<div id="mc_embed_shell">
+					<link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet"
+						type="text/css">
+					<div id="mc_embed_signup" style="background-color: transparent;">
+						<form
+							action="https://neocities.us18.list-manage.com/subscribe/post?u=e511abd99416a9ddb0f48b1ae&amp;id=01816f95d8&amp;f_id=009ab2e6f0"
+							method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+							class="validate" target="_blank">
+							<div id="mc_embed_signup_scroll">
+								<h2 data-i18n="mailchimp_signup">Subscribe to Lumaga's newsletter</h2>
+								<div class="mc-field-group"><label for="mce-EMAIL">Email <span
+											class="asterisk">*</span><i
+											style="font-size:10px">(required)</i></label><input type="email"
+										name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
+								<div id="mce-responses" class="clear foot">
+									<div class="response" id="mce-error-response" style="display: none;"></div>
+									<div class="response" id="mce-success-response" style="display: none;"></div>
+								</div>
+								<div style="position: absolute; left: -5000px;" aria-hidden="true">
+									/* real people should not fill this in and expect good things - do not remove this
+									or risk form bot signups */
+									<input type="text" name="b_e511abd99416a9ddb0f48b1ae_01816f95d8" tabindex="-1"
+										value="">
+								</div>
+								<div class="optionalParent">
+									<div class="clear foot">
+										<input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button"
+											value="Subscribe">
+										<p style="margin: 0px auto;"><a href="http://eepurl.com/jd6FRI"
+												title="Mailchimp: marketing por correo electrónico fácil y divertido"><span
+													style="display: inline-block; background-color: transparent; border-radius: 4px;"><img
+														class="refferal_badge"
+														src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-dark.svg"
+														alt="Intuit Mailchimp"
+														style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;"></span></a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<script type="text/javascript"
+						src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+					<script
+						type="text/javascript">(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; fnames[3] = 'ADDRESS'; ftypes[3] = 'address'; fnames[4] = 'PHONE'; ftypes[4] = 'phone'; fnames[5] = 'BIRTHDAY'; ftypes[5] = 'birthday'; fnames[6] = 'COMPANY'; ftypes[6] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
 				</div>
-				<div class="scale_selector hide_scale_selector">
-					<toggle class="toggle" onclick="toggle_scale_popout()"
-						>Scale</toggle
-					>
-					<div onclick="set_page_scale('width')">Width</div>
-					<div onclick="set_page_scale('height')">Height</div>
-					<div onclick="set_page_scale('both')">Both</div>
-				</div>
-				<div
-					id="comicpage"
-					class="fit_both"
-					onclick="on_click_page()"
-				></div>
-			</div>
-			<div class="pagenav pagenav_bottom">
-				<a class="nav_button nav_first" onclick="nav_to_first_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-				<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_next" onclick="nav_to_next_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_last" onclick="nav_to_last_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
+			</mailchimp>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="socials">
+			<span data-i18n="follow_me_links">Follow Lumaga on:</span><br />
+			<div>
+				<a href="https://discord.gg/QERZXpP">Discord</a>
+				<a href="https://www.instagram.com/lumaga_draws/">Instagram</a>
+				<a href="https://bsky.app/profile/lumaga.bsky.social">Bluesky</a>
+				<a href="https://www.twitch.tv/lumaga_draws">Twitch</a>
+				<a href="https://www.youtube.com/@LumagaDraws">YouTube</a>
 			</div>
 		</div>
-		<div class="about">
-			<div class="author">
-				<div class="notes ninepatch"></div>
-				<div class="links">
-					<a class="ninepatch" href="https://www.patreon.com/lumaga"
-						>Patreon</a
-					>
-					<a class="ninepatch" href="https://discord.gg/QERZXpP"
-						>Discord</a
-					>
-					<a class="ninepatch" href="https://vgen.co/Lumaga/shop"
-						>Shop</a
-					>
-				</div>
-			</div>
+		<div class="copyright">
+			<span>Domak © Lumaga 2025</span>
 		</div>
-		<div class="interactions">
-			<div class="disqus"></div>
-			<div class="chimera"></div>
-			<div class="mailchimp"></div>
-		</div>
-		<div class="footer">
-			<div class="socials">
-				<span>Follow Lumaga on:</span><br />
-				<div>
-					<a href="https://discord.gg/QERZXpP">Discord</a>
-					<a href="https://www.instagram.com/lumaga_draws/"
-						>Instagram</a
-					>
-					<a href="https://bsky.app/profile/lumaga.bsky.social"
-						>Bluesky</a
-					>
-					<a href="https://www.twitch.tv/lumaga_draws">Twitch</a>
-					<a href="https://www.youtube.com/@LumagaDraws">YouTube</a>
-				</div>
-			</div>
-			<div class="copyright">
-				<span>Domak © Lumaga 2025</span>
-			</div>
-		</div>
-	</body>
+	</div>
+
+	<script id="dsq-count-scr" src="//lumaga-draws.disqus.com/count.js" async></script>
+	<script>
+		/**
+		*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+		*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+		/*
+		var disqus_config = function () {
+		this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
+		this.language = current_language;
+		*/
+
+		(function () { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = 'https://lumaga-draws.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', + new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
 	<script>
 		let scroller = document.scrollingElement;
 
@@ -154,15 +185,8 @@
 			// Reset overflow
 			scroller.style.setProperty("overflow", "");
 		});
-
-		load_db().then((response) => {
-			published_pages = JSON.parse(response);
-			console.log(published_pages);
-			get_latest_page().then((response) => {
-				console.log(response);
-				current_page = JSON.parse(response);
-				write_page(true);
-			});
-		});
 	</script>
+
+</body>
+
 </html>

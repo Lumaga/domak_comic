@@ -115,14 +115,13 @@ body {
 
 .interactions {
 	display: grid;
-	grid-template-columns: repeat(3, auto);
-	grid-template-rows: repeat(3, auto);
+	grid-template-columns: 40px  1fr 1fr 40px;
+	grid-template-rows: repeat(2, auto);
 	gap: 0px 0px;
 	grid-auto-flow: row;
 	grid-template-areas:
-		". disqus ."
-		". chimera ."
-		". mailchimp .";
+		". disqus disqus ."
+		". mailchimp chimera .";
 	grid-area: interactions;
 }
 
@@ -160,7 +159,7 @@ body {
 	display: none;
 }
 
-.ninepatch {
+.ninepatch_box {
 	margin: 10px;
 	background-color: var(--sitenav-background-color);
 	border-image: url(../img/box.9.png) 20 20 20 20 fill round;
@@ -168,11 +167,22 @@ body {
 	border-image-outset: 9px;
 }
 
+.ninepatch_paper {
+	margin: 6px;
+	border-image: url(../img/paper_edge.9.png) 12 12 12 12 fill round;
+	border-image-width: 12px;
+	border-image-outset: 5px 9px 7px 6px;
+}
+
 /* old */
 
 /* universal background color */
 body {
 	background-color: var(--background-color);
+}
+
+.header > * {
+	place-self: center;
 }
 
 /* logo */
@@ -239,15 +249,15 @@ footer {
 	display: grid;
 }
 
-.author,
 .links {
 	width: fit-content;
 }
-/*
+
 .notes {
 	min-width: 200px;
 	max-width: 450px;
-}*/
+	justify-self: right;
+}
 
 .notes,
 .links a {
@@ -343,6 +353,11 @@ a:hover {
 	opacity: .7;
 }
 
+/* Body */
+body {
+	min-height: 100vh;
+}
+
 /* HEADER */
 .language {
 	font-size: 30px;
@@ -420,7 +435,7 @@ header #nav {
 
 .scale_selector {
 	transition: all 0.5s ease;
-	width: 220px;
+	width: fit-content;
 	height: 21px;
 	overflow-x: hidden;
 }
@@ -430,8 +445,11 @@ header #nav {
 	margin-right: 12px;
 }
 
+.scale_selector.hide_scale_selector > div {
+	display: none;
+}
+
 .scale_selector.hide_scale_selector {
-	width: 48px;
 	height: 21px;
 	overflow-x: hidden;
 }
@@ -442,6 +460,8 @@ header #nav {
 
 	padding-left: 4px;
 	content: "◀";
+
+	margin-right: -14px;
 }
 
 .scale_selector:not(.hide_scale_selector) toggle::after {
@@ -452,7 +472,7 @@ header #nav {
 }
 
 #comicPage {
-	max-width: calc(100vw - var(--scrollbar-width));
+	max-width: calc(100vw - var(--scrollbar-width) - 12px);
 	width: fit-content;
 	overflow-x: auto;
 	text-align: center;
@@ -463,8 +483,7 @@ header #nav {
 }
 
 #comicPage {
-	box-shadow: 1px 1px 4px var(--sitenav-background-color);
-	min-height: 50vh;
+	mix-blend-mode: luminosity;
 }
 
 #comicPage img {
@@ -476,10 +495,11 @@ header #nav {
 }
 
 #comicpage.fit_width img {
-	width: calc(100vw - var(--scrollbar-width));
+	width: calc(100vw - var(--scrollbar-width) - 12px);
 	height: auto;
 }
 
+#comicpage.fit_original,
 #comicpage.fit_height {
 	overflow-x: auto;
 }
@@ -490,10 +510,15 @@ header #nav {
 }
 
 #comicpage.fit_both img {
-	max-width: calc(100vw - var(--scrollbar-width));
+	max-width: calc(100vw - var(--scrollbar-width) - 12px);
 	max-height: 100vh;
 	width: auto;
 	height: auto;
+}
+
+#comicpage.fit_original img {
+	width: unset;
+	height: unset;	
 }
 
 /* Columns css */
@@ -515,12 +540,48 @@ header #nav {
 */
 
 /*DISQUS COMMENT SECTION*/
-/*
+
 .comments {
 	text-align: center;
 	margin-top: 20px;
 	max-width: 1000px;
-}*/
+	padding: 10px 20px;
+}
+
+#reactions * {
+	padding: 0;
+}
+
+/* Mailchimp */
+#mc_embed_signup {
+	width: 400px;
+}
+
+mailchimp .refferal_badge {
+	height: 20px !important;
+}
+
+/* chimera */
+
+#chimebar small,
+#chimebar p {
+    color: var(--background-color);
+	font-family: unset;
+    font-size: unset;
+    font-weight: unset;
+    font-style: unset;
+}
+
+body #chimebar[data-dir="up"] > a.logo {
+    position: relative;
+	font-size: 60px;
+	margin: -10px;
+}
+
+body #chimebar[data-dir="up"] {
+    padding-bottom: 0;
+	padding-top: 10px;
+}
 
 /* ARCHIVE PAGE */
 
