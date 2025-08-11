@@ -115,14 +115,26 @@ body {
 
 .interactions {
 	display: grid;
-	grid-template-columns: 40px  1fr 1fr 40px;
+	grid-template-columns: 40px 1fr 40px;
 	grid-template-rows: repeat(2, auto);
 	gap: 0px 0px;
 	grid-auto-flow: row;
 	grid-template-areas:
-		". disqus disqus ."
-		". mailchimp chimera .";
+		". disqus ."
+		". interactions_split .";
 	grid-area: interactions;
+	place-self: center;
+}
+
+.interactions_split {
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 0px 0px;
+	grid-auto-flow: column;
+	grid-template-areas:
+		"mailchimp chimera";
+	grid-area: interactions_split;
+	place-self: center;
 }
 
 .disqus {
@@ -546,6 +558,8 @@ header #nav {
 	margin-top: 20px;
 	max-width: 1000px;
 	padding: 10px 20px;
+	align-self: center;
+	width: -webkit-fill-available;
 }
 
 #reactions * {
@@ -553,6 +567,12 @@ header #nav {
 }
 
 /* Mailchimp */
+
+.mailchimp,
+mailchimp {
+	width: fit-content;
+}
+
 #mc_embed_signup {
 	width: 400px;
 }
