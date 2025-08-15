@@ -13,7 +13,7 @@
 			media="all"
 		/>
 		<link
-			href="css/main.css"
+			href="css/archive.css"
 			rel="stylesheet"
 			type="text/css"
 			media="all"
@@ -27,7 +27,7 @@
 			href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gabriela&display=swap"
 			rel="stylesheet"
 		/>
-		<script src="js/main.js"></script>
+		<script src="js/archive.js"></script>
 		<script src="js/i18n.js"></script>
 		<link rel="icon" type="image/png" sizes="32x32" href="favicon.32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="favicon.16.png" />
@@ -50,99 +50,8 @@
 				<a data-i18n="about_link" href="about.html">About</a>
 			</div>
 		</div>
-		<div class="page">
-			<div class="pagenav pagenav_top">
-				<a class="nav_button nav_first" onclick="nav_to_first_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-				<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_next" onclick="nav_to_next_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_last" onclick="nav_to_last_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-			</div>
-			<div class="page_img">
-				<div class="page_info">
-					<span data-i18n="page_number_label">Page</span
-					><span id="current_page_number">1</span>/<span
-						id="max_page_number"
-						>2</span
-					>
-				</div>
-				<div class="scale_selector hide_scale_selector">
-					<toggle
-						data-i18n="options_scale"
-						class="toggle"
-						onclick="toggle_scale_popout()"
-						>Scale</toggle
-					>
-					<div
-						data-i18n="options_scale_width"
-						onclick="choose_page_scale('width')"
-					>
-						Width
-					</div>
-					<div
-						data-i18n="options_scale_fit"
-						onclick="choose_page_scale('both')"
-					>
-						Fit
-					</div>
-					<div
-						data-i18n="options_scale_original"
-						onclick="choose_page_scale('original')"
-					>
-						Original
-					</div>
-				</div>
-				<div
-					id="comicpage"
-					class="fit_both ninepatch_paper"
-					onclick="on_click_page()"
-					style="height: 1412px; width: 100vw"
-				></div>
-			</div>
-			<div class="pagenav pagenav_bottom">
-				<a class="nav_button nav_first" onclick="nav_to_first_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-				<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_next" onclick="nav_to_next_page()"
-					><img src="img/comicnav/nav_previous.png"
-				/></a>
-				<a class="nav_button nav_last" onclick="nav_to_last_page()"
-					><img src="img/comicnav/nav_first.png"
-				/></a>
-			</div>
-		</div>
-		<div class="about">
-			<div class="author">
-				<div class="notes ninepatch_box"></div>
-				<div class="links">
-					<a
-						class="ninepatch_box"
-						href="https://www.patreon.com/lumaga"
-						>Patreon</a
-					>
-					<a class="ninepatch_box" href="https://discord.gg/QERZXpP"
-						>Discord</a
-					>
-					<a class="ninepatch_box" href="https://vgen.co/Lumaga/shop"
-						>Shop</a
-					>
-				</div>
-			</div>
-		</div>
+
 		<div class="interactions">
-			<div class="disqus comments ninepatch_paper">
-				<div id="disqus_thread"></div>
-			</div>
 			<div class="interactions_split">
 				<div id="chimebar" class="chimera">
 					<script

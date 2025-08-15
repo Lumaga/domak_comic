@@ -1,49 +1,41 @@
 var current_langauge = "en";
 
-/*
-const query = new URLSearchParams(window.location.search);
-if (query.get("lang")) {
-    current_langauge = query.get("lang");
-}
-*/
-
 // Function to update content based on selected language
 function update_content(langData) {
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.innerHTML = langData[key];
-    });
+	document.querySelectorAll("[data-i18n]").forEach((element) => {
+		const key = element.getAttribute("data-i18n");
+		try {
+			element.innerHTML = langData[key];
+		} catch (e) {
+			console.log(`No translation found for ${key}`);
+		}
+	});
 }
 
 // Function to fetch language data
 async function fetch_language_data(lang) {
-    const response = await fetch(`../languages/${lang}.json`);
-    return response.json();
+	try {
+		const response = await fetch(`../languages/${lang}.json`);
+		const lang_obj = new Object({ identifier: lang });
+		Object.defineProperty(lang_obj, "replacements", {
+			value: JSON.parse(await response.text()),
+		});
+		console.log(lang_obj);
+		return lang_obj;
+	} catch (e) {
+		console.error(e);
+		return e;
+	}
 }
 
-// Call updateContent() on page load
-window.addEventListener('DOMContentLoaded', async () => {
-    const user_preferred_language = localStorage.getItem('language') || 'en';
-    console.log(user_preferred_language);
-    if (current_langauge != user_preferred_language) {
-        current_langauge = user_preferred_language;
-        write_page();
-    }
-    const langData = await fetch_language_data(user_preferred_language);
-    update_content(langData);
-});
+async function set_current_language(lang_obj) {
+	current_langauge = lang_obj.identifier;
+	update_content(lang_obj.replacements);
+}
 
 async function set_language(lang) {
-	if (lang == "es") {
-		current_langauge = "es";
-	} else {
-		current_langauge = "en";
-	}
-    localStorage.setItem('language', lang);
-    const langData = await fetch_language_data(lang);
-    update_content(langData);
-//	const new_url = new URL(window.location.href);
-//	new_url.searchParams.set('lang', current_langauge);
-//	window.history.pushState(null, '', new_url.toString());
-	write_page();
+	const lang_obj = await fetch_language_data(lang);
+	set_current_language(await lang_obj);
+	localStorage.lang = lang;
+	console.log(localStorage);
 }

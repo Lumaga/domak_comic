@@ -4,5 +4,9 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"livePreview.serverRoot": "/home/",
+		"livePreview.autoRefreshPreview": "On Changes to Saved Files",
+		"livePreview.previewDebounceDelay": 2000
+	}
 }
