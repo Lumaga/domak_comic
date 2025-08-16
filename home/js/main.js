@@ -3,8 +3,6 @@ var current_page;
 var max_page_number;
 var first_load = true;
 
-const disqus_category_id = "development";
-
 load_db().then((success) => {
 	if (success) {
 		main();
@@ -383,7 +381,6 @@ var disqus_config = function () {
 		window.location.origin + `/?page=${current_page.identifier}`;
 	//this.page.identifier = current_page.identifier;
 	this.page.title = `Domak: Page ${current_page.number}`;
-	this.page.category_id = disqus_category_id;
 	this.language = disqus_language;
 	console.log(this.page);
 };
