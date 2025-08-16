@@ -31,11 +31,15 @@ async function fetch_language_data(lang) {
 async function set_current_language(lang_obj) {
 	current_langauge = lang_obj.identifier;
 	update_content(lang_obj.replacements);
+	const disqus_lang = current_langauge == "es" ? "es_419" : current_langauge;
+	disqus_language = disqus_lang;
+	update_disqus();
+	console.log("Disqus language: ", disqus_language);
 }
 
 async function set_language(lang) {
 	const lang_obj = await fetch_language_data(lang);
 	set_current_language(await lang_obj);
 	localStorage.lang = lang;
-	console.log(localStorage);
+	//console.log(localStorage);
 }

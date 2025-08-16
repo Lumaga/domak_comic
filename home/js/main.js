@@ -3,6 +3,8 @@ var current_page;
 var max_page_number;
 var first_load = true;
 
+const disqus_category_id = "development";
+
 load_db().then((success) => {
 	if (success) {
 		main();
@@ -79,22 +81,26 @@ async function main() {
 		set_current_page(page_obj);
 	}
 
-	// If the current page is wider than the user's window 
+	// If the current page is wider than the user's window
 	// and they have original size as their preferred,
 	// override it and set to width instead
-	if (window.innerWidth < document.querySelector("#comicpage img").getBoundingClientRect().width) {
+	if (
+		window.innerWidth <
+		document.querySelector("#comicpage img").getBoundingClientRect().width
+	) {
 		set_page_scale("width");
 		console.log("too big!");
 	}
 
 	update_url();
+	load_disqus_embed();
 }
 
 async function load_db() {
 	try {
 		const response = await fetch("comic/published.json", {}); // type: Promise<Response>
 		published_pages = JSON.parse(await response.text());
-		console.log(published_pages);
+		//console.log(published_pages);
 		max_page_number = published_pages.published.length;
 		console.log("max page number: ", max_page_number);
 		return true;
@@ -113,7 +119,7 @@ async function get_page(identifier) {
 		Object.defineProperty(page_obj, "number", {
 			value: published_pages.published.indexOf(identifier) + 1,
 		});
-		console.log(page_obj);
+		//console.log(page_obj);
 		return page_obj;
 	} catch (e) {
 		console.error(e);
@@ -195,6 +201,12 @@ async function write_page() {
 			parent_node.scrollIntoView({ behavior: "smooth", block: "start" });
 		}
 		first_load = false;
+		update_page_info();
+		update_nav_options();
+		update_url();
+		try {
+			update_disqus();
+		} catch (e) {}
 	});
 
 	const author_notes = document.querySelector(".notes");
@@ -206,8 +218,6 @@ async function write_page() {
 			author_notes.innerHTML = current_page.comment_en;
 			break;
 	}
-	update_nav_options();
-	update_page_info();
 	parent_node.setAttribute("style", "");
 }
 
@@ -250,22 +260,33 @@ function set_page_scale(selection) {
 		.classList.add("hide_scale_selector");
 }
 
-window.addEventListener("resize", debounce(function(e) {
-	console.log(window.innerWidth);
-	const page_elem = document.getElementById("comicpage");
-	const img_width = page_elem.querySelector("img").getBoundingClientRect().width;
-	if (page_elem.classList.contains("fit_width") && window.innerWidth > img_width) {
-		set_page_scale("original");
-	} else 	if (page_elem.classList.contains("fit_original") && window.innerWidth < img_width) {
-		set_page_scale("fit_width");
-	}
-}));
+window.addEventListener(
+	"resize",
+	debounce(function (e) {
+		console.log(window.innerWidth);
+		const page_elem = document.getElementById("comicpage");
+		const img_width = page_elem
+			.querySelector("img")
+			.getBoundingClientRect().width;
+		if (
+			page_elem.classList.contains("fit_width") &&
+			window.innerWidth > img_width
+		) {
+			set_page_scale("original");
+		} else if (
+			page_elem.classList.contains("fit_original") &&
+			window.innerWidth < img_width
+		) {
+			set_page_scale("fit_width");
+		}
+	})
+);
 
-function debounce(func){
+function debounce(func) {
 	var timer;
-	return function(event){
-		if(timer) clearTimeout(timer);
-	timer = setTimeout(func,100,event);
+	return function (event) {
+		if (timer) clearTimeout(timer);
+		timer = setTimeout(func, 100, event);
 	};
 }
 
@@ -312,7 +333,7 @@ function on_click_page() {
 
 async function nav_to_page_number(page_num) {
 	if (page_num <= published_pages.published.length) {
-		const page_obj = await get_pageget_page(
+		const page_obj = await get_page(
 			published_pages.published[page_num - 1]
 		);
 		set_current_page(page_obj);
@@ -322,47 +343,63 @@ async function nav_to_page_number(page_num) {
 function nav_to_first_page() {
 	nav_to_page_number(1);
 	localStorage.latest_read_page = 1;
-	console.log(localStorage);
+	//console.log(localStorage);
 }
 
 function nav_to_prev_page() {
 	nav_to_page_number(current_page.number - 1);
 	localStorage.latest_read_page = current_page.number - 1;
-	console.log(localStorage);
+	//console.log(localStorage);
 }
 
 function nav_to_next_page() {
 	nav_to_page_number(current_page.number + 1);
 	localStorage.latest_read_page = current_page.number + 1;
-	console.log(localStorage);
+	//console.log(localStorage);
 }
 
 function nav_to_last_page() {
 	nav_to_page_number(max_page_number);
 	localStorage.latest_read_page = max_page_number;
-	console.log(localStorage);
+	//console.log(localStorage);
+}
+
+function update_url() {
+	const new_url = new URL(window.location.origin);
+	//console.log(window.location);
+	new_url.searchParams.set("page", current_page.identifier);
+	//new_url.searchParams.set("lang", current_langauge);
+	window.history.pushState(null, "", new_url.toString());
 }
 
 /**
  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-/*
+
+var disqus_language;
+
 var disqus_config = function () {
-	this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-	this.page.identifier = current_page_identifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	};
+	this.page.url =
+		window.location.origin + `/?page=${current_page.identifier}`;
+	//this.page.identifier = current_page.identifier;
+	this.page.title = `Domak: Page ${current_page.number}`;
+	this.page.category_id = disqus_category_id;
+	this.language = disqus_language;
+	console.log(this.page);
+};
 
-function load_disqus_embed() { // DON'T EDIT BELOW THIS LINE
-	var d = document, s = d.createElement('script');
-	s.src = 'https://lumaga-draws.disqus.com/embed.js';
-	s.setAttribute('data-timestamp', + new Date());
+function load_disqus_embed() {
+	// DON'T EDIT BELOW THIS LINE
+	var d = document,
+		s = d.createElement("script");
+	s.src = "https://lumaga-draws.disqus.com/embed.js";
+	s.setAttribute("data-timestamp", +new Date());
 	(d.head || d.body).appendChild(s);
-}*/
+}
 
-function update_url() {
-	const new_url = new URL(window.location.origin);
-	console.log(window.location);
-	new_url.searchParams.set("page", current_page.identifier);
-	//new_url.searchParams.set("lang", current_langauge);
-	window.history.pushState(null, "", new_url.toString());
+function update_disqus() {
+	DISQUS.reset({
+		reload: true,
+		config: disqus_config,
+	});
 }
