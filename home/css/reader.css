@@ -216,6 +216,7 @@ reader {
 		padding: 10px 20px;
 		align-self: center;
 		width: -webkit-fill-available;
+		width: -moz-available;
 	}
 
 	#reactions * {

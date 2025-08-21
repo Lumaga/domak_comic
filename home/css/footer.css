@@ -127,4 +127,10 @@ footer {
 		height: 20px;
 		margin: 6px;
 	}
+
+	/* Chimera */
+
+	#chimebar[data-dir="up"] > a.logo {
+		bottom: 0;
+	}
 }
