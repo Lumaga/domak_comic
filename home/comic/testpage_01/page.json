@@ -1,6 +1,17 @@
 {
-	"page_en": "page_en.jpg",
-	"page_es": "page_es.jpg",
-	"comment_en": "Hello world. #1",
-	"comment_es": "Hola mundo. #1"
+	"thumbnail": "thumb.jpg",
+	"publication_date": "2025 08 17",
+	"additional_credits": "",
+
+	"en": {
+		"title": "Witches Notes #1",
+		"image": "page_en.jpg",
+		"comment": "Hello world"
+	},
+
+	"es": {
+		"title": "Notas de Brujas #1",
+		"image": "page_es.jpg",
+		"comment": "Hola mundo. #1"
+	}
 }

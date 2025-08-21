@@ -1,0 +1,20 @@
+{
+    "published": {
+        "chapter_1": {
+            "name": "No turn back",
+            "pages": 
+                [
+                    "testpage_01",
+                    "testpage_02",
+                    "testpage_03"
+                ]
+        },
+        "chapter_2": {
+            "name": "Yes turn back",
+            "pages": 
+                [
+                    "testpage_04"
+                ]
+        }
+    }
+}
