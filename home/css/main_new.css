@@ -1,0 +1,24 @@
+body {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: min-content 1fr min-content;
+	grid-auto-columns: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"header"
+		"page_content"
+		"footer";
+
+	.pagetop {
+		grid-area: header;
+	}
+
+	.content {
+		grid-area: page_content;
+	}
+
+	.footer {
+		grid-area: footer;
+	}
+}

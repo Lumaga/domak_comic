@@ -1,24 +1,27 @@
-var published_pages;
+var db;
+var page_list = [];
 var current_page;
 var max_page_number;
 var first_load = true;
+const disable_disqus = false;
 
 load_db().then((success) => {
 	if (success) {
+		//console.log("database loaded");
 		main();
 	} else {
-		const new_url = new URL(window.location.origin + "/db_load_error.html");
-		window.location.replace(new_url);
+		//const new_url = new URL(window.location.origin + "/db_load_error.html");
+		//window.location.replace(new_url);
 	}
 });
 
 async function main() {
 	// Prioritize URL queries
 	const query = new URLSearchParams(window.location.search);
-	console.log("looking for search queries");
+	//console.log("looking for search queries");
 	if (query.size) {
 		for (const [key, value] of query.entries()) {
-			console.log(`${key}, ${value}`);
+			//console.log(`${key}, ${value}`);
 			switch (key) {
 				case "page":
 					const page_obj = await get_page(value);
@@ -31,7 +34,7 @@ async function main() {
 					}
 					break;
 				default:
-					console.log(`${key} is not a valid query`);
+					//console.log(`${key} is not a valid query`);
 					query.delete(key);
 					break;
 			}
@@ -39,11 +42,11 @@ async function main() {
 	}
 
 	// Fill in with stored user preferences, if found
-	console.log("looking for localStorage");
+	//console.log("looking for localStorage");
 	if (localStorage.length) {
-		console.log("localStorage found, applying");
+		//console.log("localStorage found, applying");
 		for (const [key, value] of Object.entries(localStorage)) {
-			console.log(`${key}, ${value}`);
+			//console.log(`${key}, ${value}`);
 			switch (key) {
 				case "latest_read_page":
 					if (query.has("page")) {
@@ -65,7 +68,7 @@ async function main() {
 					set_page_scale(value);
 					break;
 				default:
-					console.log(`${key} is not a valid stored value`);
+					//console.log(`${key} is not a valid stored value`);
 					break;
 			}
 		}
@@ -73,9 +76,7 @@ async function main() {
 
 	// No page defined, load latest page
 	if (!current_page) {
-		const page_obj = await get_page(
-			published_pages.published[max_page_number - 1]
-		);
+		const page_obj = await get_page(page_list[max_page_number - 1]);
 		set_current_page(page_obj);
 	}
 
@@ -87,35 +88,46 @@ async function main() {
 		document.querySelector("#comicpage img").getBoundingClientRect().width
 	) {
 		set_page_scale("width");
-		console.log("too big!");
+		//console.log("too big!");
 	}
 
 	update_url();
-	load_disqus_embed();
+	if (!disable_disqus) {
+		disqus();
+	}
 }
 
 async function load_db() {
 	try {
-		const response = await fetch("comic/published.json", {}); // type: Promise<Response>
-		published_pages = JSON.parse(await response.text());
-		//console.log(published_pages);
-		max_page_number = published_pages.published.length;
-		console.log("max page number: ", max_page_number);
+		const response = await fetch("comic/db.json", {}); // type: Promise<Response>
+		db = JSON.parse(await response.text());
+		for (const chapter of Object.keys(db.published)) {
+			//console.log(chapter);
+			const pages = db.published[chapter].pages;
+			//console.log(pages);
+			for (const page of pages) {
+				//console.log(page);
+				page_list.push(page);
+			}
+		}
+		max_page_number = page_list.length;
+		//console.log("max page number: ", max_page_number);
 		return true;
 	} catch (e) {
 		console.error(e);
-		console.log("Failed to load main database, abort loading page");
+		//console.log("Failed to load main database, abort loading page");
 		return false;
 	}
 }
 
 async function get_page(identifier) {
 	try {
+		//console.log("attempting to get page: ", identifier);
 		const response = await fetch(`comic/${identifier}/page.json`, {}); // type: Promise<Response>
 		const page_obj = new Object(JSON.parse(await response.text()));
 		Object.defineProperty(page_obj, "identifier", { value: identifier });
 		Object.defineProperty(page_obj, "number", {
-			value: published_pages.published.indexOf(identifier) + 1,
+			value: page_list.indexOf(identifier) + 1,
 		});
 		//console.log(page_obj);
 		return page_obj;
@@ -125,17 +137,17 @@ async function get_page(identifier) {
 			"Page does not exist, attempting to return latest page instead"
 		);
 		try {
-			const latest_page =
-				published_pages.published[published_pages.published.length - 1];
+			const latest_page = page_list[page_list.length - 1];
 			const response = await fetch(`comic/${latest_page}/page.json`, {}); // type: Promise<Response>
 			const page_obj = new Object(JSON.parse(await response.text()));
 			Object.defineProperty(page_obj, "identifier", {
 				value: latest_page,
 			});
 			Object.defineProperty(page_obj, "number", {
-				value: published_pages.published.indexOf(latest_page) + 1,
+				value: page_list.indexOf(latest_page) + 1,
 			});
-			console.log(page_obj.identifier);
+			//console.log(page_obj.identifier);
+			//console.log(page_obj);
 			return page_obj;
 		} catch (e) {
 			console.error(e);
@@ -143,7 +155,7 @@ async function get_page(identifier) {
 	}
 }
 
-function set_current_page(page_obj) {
+async function set_current_page(page_obj) {
 	current_page = page_obj;
 	write_page();
 }
@@ -155,48 +167,27 @@ async function load_image(image_url) {
 		img.onload = resolve;
 		img.src = image_url;
 	});
-	console.log("image loading");
+	//console.log("image loading");
 	await imageLoadPromise;
-	console.log("image loaded");
+	//console.log("image loaded");
 	return "image loaded callback";
 }
 
 //function used to write comic page to web page
 async function write_page() {
-	const parent_node = document.getElementById("comicpage");
-
-	parent_node.setAttribute("style", "height:1412px;width:100vw;");
-	if (parent_node.hasChildNodes()) {
-		parent_node.firstChild.remove();
-	}
+	//image_node.setAttribute("src", "img/blank_page.png");
 
 	let altText = ""; //variable for alt text
 
-	let img_name;
-	switch (current_langauge) {
-		case "es":
-			img_name = current_page.page_es;
-			break;
-		default:
-			img_name = current_page.page_en;
-			break;
-	}
+	let img_name = current_page[current_langauge].image;
+	const path = "comic/" + current_page.identifier + "/" + img_name;
 
-	const path =
-		"comic/" +
-		published_pages.published[current_page.number - 1] +
-		"/" +
-		img_name;
-
-	const img_tag = document.createElement("img");
-	img_tag.src = path;
-	parent_node.appendChild(img_tag);
 	await load_image(path).then((response) => {
-		console.log(response);
-		const parent_node = document.getElementById("comicpage");
-		parent_node.setAttribute("style", "");
+		const image_node = document.querySelector("#comicpage img");
+		//console.log(response);
+		image_node.setAttribute("src", path);
 		if (!first_load) {
-			parent_node.scrollIntoView({ behavior: "smooth", block: "start" });
+			image_node.scrollIntoView({ behavior: "smooth", block: "start" });
 		}
 		first_load = false;
 		update_page_info();
@@ -207,21 +198,13 @@ async function write_page() {
 		} catch (e) {}
 	});
 
-	const author_notes = document.querySelector(".notes");
-	switch (current_langauge) {
-		case "es":
-			author_notes.innerHTML = current_page.comment_es;
-			break;
-		default:
-			author_notes.innerHTML = current_page.comment_en;
-			break;
-	}
-	parent_node.setAttribute("style", "");
+	const author_notes = document.querySelector(".author_notes .text");
+	author_notes.innerHTML = current_page[current_langauge].comment;
 }
 
 function toggle_scale_popout() {
-	const element = document.querySelector(".scale_selector");
-	element.classList.toggle("hide_scale_selector");
+	const element = document.querySelector(".reader_settings");
+	element.classList.toggle("hide_dropdown");
 }
 
 function choose_page_scale(selection) {
@@ -229,7 +212,7 @@ function choose_page_scale(selection) {
 	const page_el = document.getElementById("comicpage");
 	page_el.scrollIntoView({ behavior: "smooth", block: "start" });
 	localStorage.preferred_scale = selection;
-	console.log(localStorage);
+	//console.log(localStorage);
 }
 
 function set_page_scale(selection) {
@@ -261,7 +244,7 @@ function set_page_scale(selection) {
 window.addEventListener(
 	"resize",
 	debounce(function (e) {
-		console.log(window.innerWidth);
+		//console.log(window.innerWidth);
 		const page_elem = document.getElementById("comicpage");
 		const img_width = page_elem
 			.querySelector("img")
@@ -330,41 +313,43 @@ function on_click_page() {
 }
 
 async function nav_to_page_number(page_num) {
-	if (page_num <= published_pages.published.length) {
-		const page_obj = await get_page(
-			published_pages.published[page_num - 1]
-		);
-		set_current_page(page_obj);
+	if (page_num <= page_list.length) {
+		const page_obj = await get_page(page_list[page_num - 1]);
+		await set_current_page(page_obj);
 	}
 }
 
 function nav_to_first_page() {
-	nav_to_page_number(1);
-	localStorage.latest_read_page = 1;
-	//console.log(localStorage);
+	nav_to_page_number(1).then(() => {
+		localStorage.latest_read_page = current_page.identifier;
+		//console.log(localStorage);
+	});
 }
 
 function nav_to_prev_page() {
-	nav_to_page_number(current_page.number - 1);
-	localStorage.latest_read_page = current_page.number - 1;
-	//console.log(localStorage);
+	nav_to_page_number(current_page.number - 1).then(() => {
+		localStorage.latest_read_page = current_page.identifier;
+		//console.log(localStorage);
+	});
 }
 
 function nav_to_next_page() {
-	nav_to_page_number(current_page.number + 1);
-	localStorage.latest_read_page = current_page.number + 1;
-	//console.log(localStorage);
+	nav_to_page_number(current_page.number + 1).then(() => {
+		localStorage.latest_read_page = current_page.identifier;
+		//console.log(localStorage);
+	});
 }
 
 function nav_to_last_page() {
-	nav_to_page_number(max_page_number);
-	localStorage.latest_read_page = max_page_number;
-	//console.log(localStorage);
+	nav_to_page_number(max_page_number).then(() => {
+		localStorage.latest_read_page = current_page.identifier;
+		//console.log(localStorage);
+	});
 }
 
 function update_url() {
 	const new_url = new URL(window.location.origin);
-	//console.log(window.location);
+	////console.log(window.location);
 	new_url.searchParams.set("page", current_page.identifier);
 	//new_url.searchParams.set("lang", current_langauge);
 	window.history.pushState(null, "", new_url.toString());
@@ -382,10 +367,10 @@ var disqus_config = function () {
 	//this.page.identifier = current_page.identifier;
 	this.page.title = `Domak: Page ${current_page.number}`;
 	this.language = disqus_language;
-	console.log(this.page);
+	//console.log(this.page);
 };
 
-function load_disqus_embed() {
+function disqus() {
 	// DON'T EDIT BELOW THIS LINE
 	var d = document,
 		s = d.createElement("script");
