@@ -1,6 +1,6 @@
 reader {
 	display: grid;
-	grid-template-columns: 0.5fr 1fr 0.5fr;
+	grid-template-columns: 0.5fr min-content 0.5fr;
 	grid-template-rows: repeat(6, min-content);
 	grid-auto-rows: 1fr;
 	gap: 0px 0px;
@@ -83,7 +83,7 @@ reader {
 	}
 
 	/* style comic page image */
-
+/*
 	.comicpage_info_wrapper,
 	.scale_selector {
 		color: var(--background-color);
@@ -95,18 +95,14 @@ reader {
 		border-width: 1px;
 		border-style: solid;
 	}
-
+*/
 	.scale_selector {
 		transition: all 0.5s ease;
 		width: fit-content;
-		height: 21px;
-		overflow-x: hidden;
 		anchor-name: --optiontoggle;
-	}
-
-	.scale_selector > * {
-		display: inline-flex;
-		margin-right: 12px;
+		padding-bottom: 2px;
+		padding-left: 4px;
+		padding-right: 4px;
 	}
 
 	.reader_settings.hide_dropdown > dropdown {
@@ -118,28 +114,32 @@ reader {
 		position: absolute;
 		right: anchor(right);
 		top: anchor(bottom);
+		margin: 12px;
+        padding: 4px;
+        line-height: 24px;
+		z-index: 1;
+
+		ul {
+			padding-inline-start: 14px;
+			margin-block-start: 0;
+			margin-block-end: 0;
+		}
 	}
 
-	.scale_selector.hide_dropdown {
-		height: 21px;
-		overflow-x: hidden;
-	}
-
-	.scale_selector.hide_dropdown toggle::after {
+	.reader_settings.hide_dropdown > div::after {
 		font-size: 12px;
 		transform: translateY(2px);
 
 		padding-left: 4px;
 		content: "◀";
 
-		margin-right: -14px;
 	}
 
-	.scale_selector:not(.hide_dropdown) toggle::after {
+	.reader_settings:not(.hide_dropdown) > div::after {
 		font-size: 12px;
 		transform: translateY(2px);
 		padding-left: 4px;
-		content: "▶";
+		content: "▼";
 	}
 
 	#comicpage {
@@ -221,5 +221,9 @@ reader {
 
 	#reactions * {
 		padding: 0;
+	}
+
+	#reactions__container .text-bold {
+		display: none;
 	}
 }

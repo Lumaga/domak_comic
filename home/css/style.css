@@ -28,6 +28,7 @@ h5 {
 }
 
 /* body font */
+li,
 label,
 span,
 input,
@@ -53,14 +54,25 @@ p {
 	border-image-outset: 5px 9px 7px 6px;
 }
 
+.ninepatch_paper_2 {
+	margin: 6px;
+	border-image: url(../img/paper_edge_2.9.png) 30 30 30 30 fill;
+	border-image-width: 12px;
+	border-image-outset: 5px 9px 7px 6px;
+}
+
 /* old */
 
 /* universal background color */
 body {
 	background-color: var(--background-color);
-	overflow-x: clip;
 	min-height: 100vh;
 	margin: 0;
+	max-width: 100vw;
+}
+
+html, body {
+	overflow-x: hidden;
 }
 
 /* clearfix hack to prevent image overflow. check out the W3Schools page on it. */

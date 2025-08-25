@@ -1,11 +1,15 @@
-var current_langauge = "en";
+var current_language = "en";
 
 // Function to update content based on selected language
 function update_content(langData) {
 	document.querySelectorAll("[data-i18n]").forEach((element) => {
 		const key = element.getAttribute("data-i18n");
 		try {
-			element.innerHTML = langData[key];
+			if (element.tagName == "IMG"){
+				element.alt = langData[key];
+			} else {
+				element.innerHTML = langData[key];
+			}
 		} catch (e) {
 			console.log(`No translation found for ${key}`);
 		}
@@ -29,12 +33,9 @@ async function fetch_language_data(lang) {
 }
 
 async function set_current_language(lang_obj) {
-	current_langauge = lang_obj.identifier;
+	current_language = lang_obj.identifier;
+	document.querySelector("html").setAttribute("lang", current_language);
 	update_content(lang_obj.replacements);
-	const disqus_lang = current_langauge == "es" ? "es_419" : current_langauge;
-	disqus_language = disqus_lang;
-	update_disqus();
-	console.log("Disqus language: ", disqus_language);
 }
 
 async function set_language(lang) {

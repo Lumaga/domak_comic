@@ -34,57 +34,39 @@ footer {
 	h2 {
 		margin: 0;
 		font-size: 32px;
+		padding-bottom: 16px;
 	}
 
-	/* chimera */
-
-	#chimebar small,
-	#chimebar p {
-		color: var(--background-color);
-		font-family: unset;
-		font-size: unset;
-		font-weight: unset;
-		font-style: unset;
-	}
-
-	body #chimebar[data-dir="up"] > a.logo {
-		position: relative;
-		font-size: 60px;
-		margin: -10px;
-	}
-
-	body #chimebar[data-dir="up"] {
-		padding-bottom: 0;
-		padding-top: 10px;
-	}
-
+	
 	.footer {
 		color: var(--text-link-color);
 		background-color: var(--sitenav-background-color);
 		align-items: center;
 	}
-
+	
 	.social_links {
 		justify-self: center;
-
+		
 		.links {
+			display: flex;
+			flex-direction: column;
 			justify-self: center;
+			text-align: center;
 			span {
 				font-size: 26px;
 			}
-
+			
 			& > div {
-				display: grid;
 				width: min-content;
 				place-self: center;
 			}
-
+			
 			a {
 				font-size: 22px;
 				padding: 0 2px;
 				width: min-content;
 			}
-
+			
 			a::before {
 				content: "•";
 				padding: 0 2px;
@@ -97,21 +79,21 @@ footer {
 		background-color: var(--sitenav-background-color);
 		padding: 4px;
 		margin-top: 32px;
-
+		
 		span {
-			font-size: 12px;
+			font-size: 16px;
 			color: var(--background-color);
 		}
 	}
-
+	
 	/* Mailchimp */
-
+	
 	#mc_embed_signup {
 		.optionalParent {
 			display: grid;
-			grid-template-columns: 1fr min-content;
+			grid-template-columns: 1fr 1fr;
 		}
-
+		
 		form {
 			text-align: center;
 		}
@@ -129,8 +111,25 @@ footer {
 	}
 
 	/* Chimera */
+	
+	#chimebar[data-dir="up"] {
+		padding-bottom: 0;
+		padding-top: 60px;
 
-	#chimebar[data-dir="up"] > a.logo {
-		bottom: 0;
+		& > a.logo {
+			bottom: 76px;
+            left: 8px;
+            font-size: 62px;
+		}
+		
+		small,
+		p {
+			color: var(--background-color);
+			font-family: unset;
+			font-size: unset;
+			font-weight: unset;
+			font-style: unset;
+		}
 	}
+	
 }

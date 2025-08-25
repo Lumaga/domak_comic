@@ -1,7 +1,8 @@
 {
     "published": {
         "chapter_1": {
-            "name": "No turn back",
+            "name_en": "No turn back",
+            "name_es": "No vuelta atrás",
             "pages": 
                 [
                     "testpage_01",
@@ -10,7 +11,8 @@
                 ]
         },
         "chapter_2": {
-            "name": "Yes turn back",
+            "name_en": "Yes turn back",
+            "name_es": "Si vuelta atrás",
             "pages": 
                 [
                     "testpage_04"

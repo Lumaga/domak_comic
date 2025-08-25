@@ -1,8 +1,11 @@
 var db;
 var page_list = [];
+var chapter_list = [];
 var current_page;
+var current_chapter;
 var max_page_number;
 var first_load = true;
+var reader_language = "en";
 const disable_disqus = false;
 
 load_db().then((success) => {
@@ -108,6 +111,7 @@ async function load_db() {
 			for (const page of pages) {
 				//console.log(page);
 				page_list.push(page);
+				chapter_list.push(chapter);
 			}
 		}
 		max_page_number = page_list.length;
@@ -121,38 +125,22 @@ async function load_db() {
 }
 
 async function get_page(identifier) {
+	let page_obj;
+	//console.log("attempting to get page: ", identifier);
 	try {
-		//console.log("attempting to get page: ", identifier);
-		const response = await fetch(`comic/${identifier}/page.json`, {}); // type: Promise<Response>
-		const page_obj = new Object(JSON.parse(await response.text()));
-		Object.defineProperty(page_obj, "identifier", { value: identifier });
-		Object.defineProperty(page_obj, "number", {
-			value: page_list.indexOf(identifier) + 1,
-		});
-		//console.log(page_obj);
-		return page_obj;
-	} catch (e) {
-		console.error(e);
-		console.log(
-			"Page does not exist, attempting to return latest page instead"
-		);
-		try {
-			const latest_page = page_list[page_list.length - 1];
-			const response = await fetch(`comic/${latest_page}/page.json`, {}); // type: Promise<Response>
-			const page_obj = new Object(JSON.parse(await response.text()));
-			Object.defineProperty(page_obj, "identifier", {
-				value: latest_page,
-			});
-			Object.defineProperty(page_obj, "number", {
-				value: page_list.indexOf(latest_page) + 1,
-			});
-			//console.log(page_obj.identifier);
-			//console.log(page_obj);
-			return page_obj;
-		} catch (e) {
-			console.error(e);
-		}
+		page_obj = await fetch(`comic/${identifier}/page.json`);
+		page_obj = await page_obj.json();
+	} catch(e) {
+		console.error(`page ${identifier} does not exist, attempting to load latest page instead`)
+		identifier = page_list[page_list.length - 1];
+		page_obj = await fetch(`comic/${identifier}/page.json`);
+		page_obj = await page_obj.json();
 	}
+	//console.log("got a page, adding extra variables");
+	page_obj["identifier"] = identifier;
+	page_obj["number"] = page_list.indexOf(identifier) + 1
+	//console.log(page_obj);
+	return page_obj;
 }
 
 async function set_current_page(page_obj) {
@@ -175,31 +163,35 @@ async function load_image(image_url) {
 
 //function used to write comic page to web page
 async function write_page() {
-	//image_node.setAttribute("src", "img/blank_page.png");
-
-	let altText = ""; //variable for alt text
-
-	let img_name = current_page[current_langauge].image;
+	const image_node = document.querySelector("#comicpage img");
+	//console.log(current_page);
+	let img_name = current_page[reader_language].image;
 	const path = "comic/" + current_page.identifier + "/" + img_name;
-
-	await load_image(path).then((response) => {
-		const image_node = document.querySelector("#comicpage img");
-		//console.log(response);
-		image_node.setAttribute("src", path);
-		if (!first_load) {
-			image_node.scrollIntoView({ behavior: "smooth", block: "start" });
-		}
-		first_load = false;
-		update_page_info();
-		update_nav_options();
-		update_url();
-		try {
-			update_disqus();
-		} catch (e) {}
-	});
-
+	//console.log(response);
+	image_node.setAttribute("src", path);
+	if (!first_load) {
+		//image_node.scrollIntoView({ behavior: "smooth", block: "start" });
+	}
+	first_load = false;
+	update_page_info();
+	update_nav_options();
+	update_url();
 	const author_notes = document.querySelector(".author_notes .text");
-	author_notes.innerHTML = current_page[current_langauge].comment;
+	author_notes.innerHTML = current_page[reader_language].comment;
+	const comment_image = document.getElementById("comment_image");
+	if (current_page.comment_image != "") {
+		comment_image.src = "comic/" + current_page.identifier + "/" + current_page.comment_image;
+		comment_image.classList.remove("hidden");
+	} else {
+		comment_image.removeAttribute("src");
+		comment_image.classList.add("hidden");
+	}
+	
+	try {
+		update_disqus();
+	} catch (e) {}
+
+
 }
 
 function toggle_scale_popout() {
@@ -210,7 +202,7 @@ function toggle_scale_popout() {
 function choose_page_scale(selection) {
 	set_page_scale(selection);
 	const page_el = document.getElementById("comicpage");
-	page_el.scrollIntoView({ behavior: "smooth", block: "start" });
+	//page_el.scrollIntoView({ behavior: "smooth", block: "start" });
 	localStorage.preferred_scale = selection;
 	//console.log(localStorage);
 }
@@ -237,8 +229,8 @@ function set_page_scale(selection) {
 			break;
 	}
 	document
-		.querySelector(".scale_selector")
-		.classList.add("hide_scale_selector");
+		.querySelector(".reader_settings")
+		.classList.add("hide_dropdown");
 }
 
 window.addEventListener(
@@ -301,9 +293,8 @@ function update_nav_options() {
 }
 
 function update_page_info() {
-	document.getElementById("current_page_number").innerHTML =
-		current_page.number;
-	document.getElementById("max_page_number").innerHTML = max_page_number;
+	document.getElementById("chapter_name").innerHTML = db.published[chapter_list[current_page.number - 1]][`name_${reader_language}`];
+	document.getElementById("page_name").innerHTML = current_page[reader_language].title;
 }
 
 function on_click_page() {
@@ -349,11 +340,31 @@ function nav_to_last_page() {
 
 function update_url() {
 	const new_url = new URL(window.location.origin);
-	////console.log(window.location);
 	new_url.searchParams.set("page", current_page.identifier);
-	//new_url.searchParams.set("lang", current_langauge);
 	window.history.pushState(null, "", new_url.toString());
 }
+
+const language_change_callback = (mutationsList) => {
+	for (const mutation of mutationsList) {
+		if (
+			mutation.type !== "attributes" ||
+			mutation.attributeName !== "lang"
+		) {
+			return
+		}
+		reader_language = mutation.target.getAttribute("lang");
+		//console.log('new language:', reader_language);
+		write_page();
+
+		disqus_language = reader_language == "es" ? "es_419" : reader_language;
+		try {
+		update_disqus();
+		} catch (e) {}
+	}
+}
+
+const language_change_observer = new MutationObserver(language_change_callback);
+language_change_observer.observe(document.querySelector("html"), { attributes: true });
 
 /**
  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -374,6 +385,7 @@ function disqus() {
 	// DON'T EDIT BELOW THIS LINE
 	var d = document,
 		s = d.createElement("script");
+		c = {silent: false};
 	s.src = "https://lumaga-draws.disqus.com/embed.js";
 	s.setAttribute("data-timestamp", +new Date());
 	(d.head || d.body).appendChild(s);

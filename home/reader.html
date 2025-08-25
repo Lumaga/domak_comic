@@ -17,41 +17,41 @@
 		/></a>
 	</div>
 	<div class="reader_settings hide_dropdown">
-		<div class="scale_selector">
-			<toggle
+		<div class="scale_selector ninepatch_paper_2">
+			<span
 				data-i18n="options_scale"
 				class="toggle"
 				onclick="toggle_scale_popout()"
-				>Scale</toggle
+				>Scale</span
 			>
 		</div>
-		<dropdown>
-			<div
+		<dropdown class="ninepatch_paper_2">
+			<ul>
+			<li
 				data-i18n="options_scale_width"
 				onclick="choose_page_scale('width')"
 			>
 				Width
-			</div>
-			<div
+			</li>
+			<li
 				data-i18n="options_scale_fit"
 				onclick="choose_page_scale('both')"
 			>
 				Fit
-			</div>
-			<div
+		</li>
+			<li
 				data-i18n="options_scale_original"
 				onclick="choose_page_scale('original')"
 			>
 				Original
-			</div>
+		</li>
+		</ul>
 		</dropdown>
 	</div>
 	<div class="comicpage_info">
-		<div class="comicpage_info_wrapper">
-			<span data-i18n="page_number_label">Page</span
-			><span id="current_page_number">1</span>/<span id="max_page_number"
-				>2</span
-			>
+		<div class="comicpage_info_wrapper ninepatch_paper_2">
+			<span id="chapter_name"></span><br/>
+			<span id="page_name"></span>
 		</div>
 	</div>
 	<div
@@ -77,7 +77,7 @@
 	</div>
 	<div class="author_notes ninepatch_box">
 		<p class="text"></p>
-		<img />
+		<img id="comment_image"/>
 	</div>
 	<div class="comments ninepatch_paper"><div id="disqus_thread"></div></div>
 </reader>
