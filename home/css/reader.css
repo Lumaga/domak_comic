@@ -99,7 +99,6 @@ reader {
 	.scale_selector {
 		transition: all 0.5s ease;
 		width: fit-content;
-		anchor-name: --optiontoggle;
 		padding-bottom: 2px;
 		padding-left: 4px;
 		padding-right: 4px;
@@ -110,10 +109,9 @@ reader {
 	}
 
 	.reader_settings dropdown {
-		position-anchor: --optiontoggle;
 		position: absolute;
-		right: anchor(right);
-		top: anchor(bottom);
+		right: 0;
+		transform: translateY(32px);
 		margin: 12px;
         padding: 4px;
         line-height: 24px;
