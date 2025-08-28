@@ -1,0 +1,67 @@
+pagetop {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(2, min-content);
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"header"
+		"site_nav";
+
+	.header {
+		display: grid;
+		grid-template-columns: min-content 1fr min-content;
+		grid-template-rows: 1fr;
+		gap: 0px 0px;
+		grid-auto-flow: row;
+		grid-template-areas: ". logo language";
+		grid-area: header;
+	}
+
+	.logo {
+		grid-area: logo;
+		justify-self: center;
+	}
+
+	.language {
+		grid-area: language;
+		position: absolute;
+		right: var(--scrollbar-width);
+		padding: 8px;
+	}
+
+	/* separator */
+	a:not(:last-child)::after {
+		content: var(--menu-separator-character, "|");
+		padding-left: 10px;
+	}
+
+	a {
+		font-size: 26px;
+	}
+
+	.site_nav {
+		grid-area: site_nav;
+	}
+
+	.language {
+		font-size: 30px;
+
+		a {
+			cursor: pointer;
+		}
+	}
+
+	.logo img {
+		width: 100%;
+		max-width: 500px;
+		padding: 12px;
+	}
+
+	.site_nav {
+		background-color: var(--sitenav-background-color);
+		font-family: "Gabriela", serif;
+		text-align: center;
+		width: 100%;
+	}
+}

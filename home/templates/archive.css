@@ -1,0 +1,57 @@
+.archive {
+	justify-self: center;
+	interpolate-size: allow-keywords;
+	display: grid;
+
+	.expandable > .page_list {
+		overflow: hidden;
+		/*transition: all 0.5s ease-in-out;*/
+		-webkit-transition: height ease 0.5s;
+		-moz-transition: height ease 0.5s;
+		-o-transition: height ease 0.5s;
+		transition: height ease 0.5s;
+		height: 0px;
+	}
+
+	.expandable.open > .page_list {
+		height: fit-content;
+	}
+
+	h1,
+	h2,
+	.chapter,
+	.title {
+		justify-self: center;
+		margin-block-start: 0;
+		margin-block-end: 16px;
+		cursor: pointer;
+	}
+
+	.title {
+		margin-block-start: 16px;
+	}
+
+	.chapter {
+		mix-blend-mode: luminosity;
+		display: grid;
+	}
+
+	.page {
+		padding: 16px;
+		display: flex;
+		cursor: pointer;
+		padding: 16px 64px 16px 16px;
+
+		h3 {
+			padding-left: 16px;
+		}
+
+		img {
+			transform: translateZ(-10px);
+		}
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

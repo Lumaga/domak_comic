@@ -8,20 +8,32 @@
 		<title>Domak</title>
 		<link rel="icon" type="image/png" sizes="32x32" href="favicon.32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="favicon.16.png" />
+		<link href="style.css" rel="stylesheet" type="text/css" media="all" />
 		<link
-			href="css/style.css"
+			href="templates/header.css"
 			rel="stylesheet"
 			type="text/css"
 			media="all"
 		/>
-		<script src="js/i18n.js"></script>
-		<script src="js/main.js"></script>
-		<script src="https://github.com/VivianVerdant/service-now-userscripts/raw/refs/heads/main/lib/wait_for_element.js"></script>
+		<link
+			href="templates/reader.css"
+			rel="stylesheet"
+			type="text/css"
+			media="all"
+		/>
+		<link
+			href="templates/footer.css"
+			rel="stylesheet"
+			type="text/css"
+			media="all"
+		/>
+		<script src="i18n/i18n.js"></script>
+		<script src="main.js"></script>
 	</head>
 	<body>
 		<div id="load_page_top">
 			<script>
-				fetch("header.html")
+				fetch("templates/header.html")
 					.then((response) => response.text())
 					.then(
 						(text) =>
@@ -31,10 +43,10 @@
 					);
 			</script>
 		</div>
-		
+
 		<div id="load_page_content">
 			<script>
-				fetch("reader.html")
+				fetch("templates/reader.html")
 					.then((response) => response.text())
 					.then(
 						(text) =>
@@ -44,11 +56,11 @@
 					);
 			</script>
 		</div>
-		<script src="js/reader.js"></script>
+		<script src="templates/reader.js"></script>
 
 		<div id="load_page_footer">
 			<script>
-				fetch("footer.html")
+				fetch("templates/footer.html")
 					.then((response) => response.text())
 					.then(
 						(text) =>

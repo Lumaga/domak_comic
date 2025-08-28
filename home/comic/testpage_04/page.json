@@ -1,18 +1,18 @@
 {
-	"thumbnail": "thumb.jpg",
+	"thumbnail": "thumb.png",
 	"publication_date": "2025 08 17",
 	"additional_credits": "",
 	"comment_image": "",
 
 	"en": {
-		"title": "Witches Notes #1",
+		"title": "Witches Notes #4",
 		"image": "page_en.jpg",
 		"alt_text": "",
 		"comment": "Hello world #4"
 	},
 
 	"es": {
-		"title": "Notas de Brujas #1",
+		"title": "Notas de Brujas #4",
 		"image": "page_es.jpg",
 		"alt_text": "",
 		"comment": "Hola mundo. #4"
