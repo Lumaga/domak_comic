@@ -1,4 +1,5 @@
 var archive_language = "en";
+var archive_html = "";
 
 document.addEventListener("click", (event) => {
 	if (event.target.parentNode.classList.contains("expandable")) {
@@ -21,7 +22,7 @@ async function main() {
 	try {
 		document.getElementById("archive_content").innerHTML = "";
 	} catch (e) {}
-	let archive_html = "";
+	archive_html = "";
 	for (const chapter of Object.keys(db.published)) {
 		const name = db.published[chapter][`name_${archive_language}`];
 		const pages = db.published[chapter].pages;
@@ -46,8 +47,11 @@ async function main() {
 		archive_html = archive_html.concat(chapter_html);
 	}
 	//console.log(archive_html);
-	document.getElementById("archive_content").innerHTML = archive_html;
-	document.querySelector(".chapter:last-of-type").classList.add("open");
+
+	wait_for_element("#archive_content").then((element) => {
+		element.innerHTML = archive_html;
+		document.querySelector(".chapter:last-of-type").classList.add("open");
+	});
 }
 
 const language_change_callback = (mutationsList) => {

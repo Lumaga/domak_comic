@@ -21,6 +21,10 @@ pagetop {
 	.logo {
 		grid-area: logo;
 		justify-self: center;
+
+		a:hover {
+			opacity: 1;
+		}
 	}
 
 	.language {
