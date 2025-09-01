@@ -1,12 +1,15 @@
 var current_language = "en";
 
 // Function to update content based on selected language
-function update_content(langData) {
-	document.querySelectorAll("[data-i18n]").forEach((element) => {
+function update_content(langData, root) {
+	root.querySelectorAll("[data-i18n]").forEach((element) => {
 		const key = element.getAttribute("data-i18n");
 		try {
 			if (element.tagName == "IMG") {
 				element.alt = langData[key];
+				element.title = langData[key];
+			} else if (element.tagName == "INPUT" && element.type == "submit") {
+				element.value = langData[key];
 			} else {
 				element.innerHTML = langData[key];
 			}
@@ -32,15 +35,22 @@ async function fetch_language_data(lang) {
 	}
 }
 
-async function set_current_language(lang_obj) {
+async function set_current_language(lang_obj, root) {
 	current_language = lang_obj.identifier;
 	document.querySelector("html").setAttribute("lang", current_language);
-	update_content(lang_obj.replacements);
+	update_content(lang_obj.replacements, root);
 }
 
 async function set_language(lang) {
 	const lang_obj = await fetch_language_data(lang);
-	set_current_language(await lang_obj);
+	set_current_language(await lang_obj, document);
 	localStorage.lang = lang;
 	//console.log(localStorage);
+}
+
+async function update_module_lang(name) {
+	const module_root = document.querySelector(`module[name="${name}"]`);
+	const lang = localStorage.lang ? localStorage.lang : current_language;
+	const lang_obj = await fetch_language_data(lang);
+	update_content(await lang_obj.replacements, module_root);
 }

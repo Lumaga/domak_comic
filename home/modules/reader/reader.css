@@ -1,4 +1,4 @@
-reader {
+module > reader {
 	display: grid;
 	grid-template-columns: 0.5fr min-content 0.5fr;
 	grid-template-rows: repeat(6, min-content);
@@ -111,7 +111,7 @@ reader {
 	.reader_settings dropdown {
 		position: absolute;
 		right: 0;
-		transform: translateY(32px);
+		transform: translateY(32px) translateX(-16px);
 		margin: 12px;
         padding: 4px;
         line-height: 24px;
@@ -210,7 +210,7 @@ reader {
 	.comments {
 		text-align: center;
 		margin-top: 20px;
-		max-width: 1000px;
+		max-width: 800px;
 		padding: 10px 20px;
 		align-self: center;
 		width: -webkit-fill-available;

@@ -1,0 +1,28 @@
+module > about {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 800px;
+    place-self: center;
+
+    h1 {
+        text-align: center;
+        position: relative;
+    }
+
+    p {
+        margin: 0;
+        padding: 6px 22px;
+    }
+
+    .float_image_right {
+        display: grid;
+        grid-auto-flow: column;
+    }
+
+    .portrait {
+        position: relative;
+        margin: -48px 20px;
+    }
+}

@@ -76,23 +76,64 @@ async function get_page(identifier) {
 	return page_obj;
 }
 
-function wait_for_element(selector) {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
+let animation_counter = 0;
+
+function wait_for_element(selector, func) {
+	parent = document.body;
+
+    const animationName = `waitForElement__${animation_counter++}`;
+
+    const style = document.createElement("style");
+
+    const keyFrames = `
+      @keyframes ${animationName} {
+        from { opacity: 1; }
+        to { opacity: 1; }
+      }
+      ${selector} {
+        animation-duration: 1ms;
+        animation-name: ${animationName};
+      }
+    `;
+
+    style.appendChild(new Text(keyFrames));
+
+    document.head.appendChild(style);
+
+    const eventListener = (event) => {
+        if (event.animationName === animationName) {
+            func(event.target);
         }
+    };
 
-        const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                observer.disconnect();
-                resolve(document.querySelector(selector));
-            }
-        });
-
-        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
+    document.addEventListener("animationstart", eventListener, false);
 }
+
+function dynamically_load_script(url) {
+    var script = document.createElement("script");
+    script.src = url;   
+    document.body.appendChild(script);
+}
+
+wait_for_element("module", (element) => {
+	if (element.getAttribute("name")) {
+		const name = element.getAttribute("name");
+		try {
+			fetch(`modules/${name}/${name}.css`)
+				.then((response) => {
+					const linktag = document.createElement("LINK");
+					linktag.setAttribute("href", `modules/${name}/${name}.css`);
+					linktag.setAttribute("rel", "stylesheet");
+					linktag.setAttribute("type", "text/css");
+					linktag.setAttribute("media", "all");
+					document.head.appendChild(linktag);
+				}).then(() => {
+					fetch(`modules/${name}/${name}.html`)
+						.then((response) => response.text())
+							.then((text) =>	element.innerHTML = text)
+								.then(() => dynamically_load_script(`modules/${name}/${name}.js`))
+									.then(() => update_module_lang(name));
+					});
+		} catch(e) {}
+	}
+});

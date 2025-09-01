@@ -40,18 +40,28 @@
 		padding: 16px;
 		display: flex;
 		cursor: pointer;
-		padding: 16px 64px 16px 16px;
-
+		padding: 8px 64px 8px 16px;
+		align-items: center;
+		justify-content: space-between;
+		
 		h3 {
-			padding-left: 16px;
+			margin: 0;
+		
+			:hover {
+				text-decoration: underline;
+			}
 		}
 
 		img {
 			transform: translateZ(-10px);
+			width: auto;
+			height: 68px;
 		}
 
-		&:hover {
-			text-decoration: underline;
+		.page_info{
+			padding-left: 16px;
+			display: flex;
+			flex-direction: column;
 		}
 	}
 }

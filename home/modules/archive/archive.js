@@ -1,4 +1,4 @@
-var archive_language = "en";
+var archive_language = localStorage.lang || "en";
 var archive_html = "";
 
 document.addEventListener("click", (event) => {
@@ -11,14 +11,14 @@ document.addEventListener("click", (event) => {
 load_db().then((success) => {
 	if (success) {
 		//console.log("database loaded");
-		main();
+		archive_main();
 	} else {
 		const new_url = new URL(window.location.origin + "/db_load_error.html");
 		window.location.assign(new_url);
 	}
 });
 
-async function main() {
+async function archive_main() {
 	try {
 		document.getElementById("archive_content").innerHTML = "";
 	} catch (e) {}
@@ -30,10 +30,13 @@ async function main() {
 		for (const page of pages) {
 			const page_obj = await get_page(page);
 			let html = `<a class="page" href="/index.html?page=${page}">
-				<div class="ninepatch_paper_3">
+				<div>
 					<img src="/comic/${page}/${page_obj.thumbnail}" class="thumbnail" />
 				</div>
+				<div class="page_info">
 				<h3>${page_obj[archive_language].title}</h3>
+				<span>${page_obj.publication_date}</span>
+				</div>
 			</a>
 			`;
 			pages_html = pages_html.concat(html);
@@ -48,7 +51,7 @@ async function main() {
 	}
 	//console.log(archive_html);
 
-	wait_for_element("#archive_content").then((element) => {
+	wait_for_element("#archive_content", (element) => {
 		element.innerHTML = archive_html;
 		document.querySelector(".chapter:last-of-type").classList.add("open");
 	});
@@ -63,7 +66,7 @@ const language_change_callback = (mutationsList) => {
 			return;
 		}
 		archive_language = mutation.target.getAttribute("lang");
-		main();
+		archive_main();
 	}
 };
 

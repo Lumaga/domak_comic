@@ -3,19 +3,19 @@ var current_chapter;
 var max_page_number;
 var first_load = true;
 var reader_language = "en";
-const disable_disqus = true;
+const disable_disqus = false;
 
 load_db().then((success) => {
 	if (success) {
 		//console.log("database loaded");
-		main();
+		reader_main();
 	} else {
 		const new_url = new URL(window.location.origin + "/db_load_error.html");
 		window.location.assign(new_url);
 	}
 });
 
-async function main() {
+async function reader_main() {
 	// Prioritize URL queries
 	const query = new URLSearchParams(window.location.search);
 	//console.log("looking for search queries");
@@ -363,3 +363,7 @@ function update_disqus() {
 		});
 	}
 }
+
+wait_for_element(".reaction-items", (element) => {
+	console.warn(element)
+});

@@ -10,16 +10,16 @@ pagetop {
 
 	.header {
 		display: grid;
-		grid-template-columns: min-content 1fr min-content;
 		grid-template-rows: 1fr;
 		gap: 0px 0px;
 		grid-auto-flow: row;
-		grid-template-areas: ". logo language";
 		grid-area: header;
 	}
 
 	.logo {
-		grid-area: logo;
+		grid-area: 1/1/1/4;
+		display: grid;
+		position: relative;
 		justify-self: center;
 
 		a:hover {
@@ -28,28 +28,31 @@ pagetop {
 	}
 
 	.language {
-		grid-area: language;
-		position: absolute;
-		right: var(--scrollbar-width);
+		grid-area: 1/3/1/4;
+		display: flex;
+		position: relative;
+		justify-self: end;
 		padding: 8px;
 	}
 
 	/* separator */
 	a:not(:last-child)::after {
 		content: var(--menu-separator-character, "|");
-		padding-left: 10px;
-	}
-
-	a {
-		font-size: 26px;
+		padding: 0 10px;
 	}
 
 	.site_nav {
 		grid-area: site_nav;
+		
+		a {
+			font-size: 26px;
+		}
 	}
 
 	.language {
-		font-size: 30px;
+		-webkit-text-stroke-width: 6px;
+    	-webkit-text-stroke-color: var(--background-color);
+    	paint-order: stroke;
 
 		a {
 			cursor: pointer;
@@ -65,7 +68,8 @@ pagetop {
 	.site_nav {
 		background-color: var(--sitenav-background-color);
 		font-family: "Gabriela", serif;
-		text-align: center;
 		width: 100%;
+		display: flex;
+        justify-content: center;
 	}
 }

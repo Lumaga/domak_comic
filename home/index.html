@@ -9,73 +9,12 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="favicon.32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="favicon.16.png" />
 		<link href="style.css" rel="stylesheet" type="text/css" media="all" />
-		<link
-			href="templates/header.css"
-			rel="stylesheet"
-			type="text/css"
-			media="all"
-		/>
-		<link
-			href="templates/reader.css"
-			rel="stylesheet"
-			type="text/css"
-			media="all"
-		/>
-		<link
-			href="templates/footer.css"
-			rel="stylesheet"
-			type="text/css"
-			media="all"
-		/>
 		<script src="i18n/i18n.js"></script>
 		<script src="main.js"></script>
 	</head>
 	<body>
-		<div id="load_page_top">
-			<script>
-				fetch("templates/header.html")
-					.then((response) => response.text())
-					.then(
-						(text) =>
-							(document.getElementById(
-								"load_page_top"
-							).innerHTML = text)
-					);
-			</script>
-		</div>
-
-		<div id="load_page_content">
-			<script>
-				fetch("templates/reader.html")
-					.then((response) => response.text())
-					.then(
-						(text) =>
-							(document.getElementById(
-								"load_page_content"
-							).innerHTML = text)
-					);
-			</script>
-		</div>
-		<script src="templates/reader.js"></script>
-
-		<div id="load_page_footer">
-			<script>
-				fetch("templates/footer.html")
-					.then((response) => response.text())
-					.then(
-						(text) =>
-							(document.getElementById(
-								"load_page_footer"
-							).innerHTML = text)
-					);
-			</script>
-		</div>
-		<script
-			id="chimescript"
-			dir="up"
-			type="module"
-			src="https://chimeracomics.org/js/chimebar.js"
-			mode="light"
-		></script>
+		<module name="pagetop"></module>
+		<module name="reader"></module>
+		<module name="footer"></module>
 	</body>
 </html>

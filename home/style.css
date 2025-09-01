@@ -50,19 +50,19 @@ body {
 /* emphasis font */
 h1 {
 	font-family: "Gabriela", serif;
-	font-size: 3em;
+	font-size: 32px;
 }
 
 h2 {
 	font-family: "Gabriela", serif;
-	font-size: 2.5em;
+	font-size: 26px;
 }
 
 h3,
 h4,
 h5 {
 	font-family: "Gabriela", serif;
-	font-size: 2em;
+	font-size: 22px;
 }
 
 /* body font */
@@ -73,7 +73,7 @@ span,
 input,
 p {
 	font-family: "EB Garamond", serif;
-	font-size: 16pt;
+	font-size: 22px;
 	font-style: normal;
 }
 
