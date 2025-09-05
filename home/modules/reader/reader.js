@@ -4,6 +4,7 @@ var max_page_number;
 var first_load = true;
 var reader_language = "en";
 const disable_disqus = false;
+var page_colorize_enabled = true;
 
 load_db().then((success) => {
 	if (success) {
@@ -152,8 +153,22 @@ async function write_page() {
 
 function toggle_scale_popout() {
 	const element = document.querySelector(".reader_settings");
+	var rect = document
+		.querySelector(".scale_selector")
+		.getBoundingClientRect();
+	const dropdown = document.querySelector(".reader_settings dropdown");
+	dropdown.style.top = `${rect.bottom}px`;
+	//dropdown.style.right = `${rect.right - rect.left}px`;
 	element.classList.toggle("hide_dropdown");
 }
+
+function show_reader_help() {
+	document.querySelector(".reader_help").classList.remove("hidden");
+}
+
+document.body.addEventListener("scroll", (event) => {
+	document.querySelector(".reader_settings").classList.add("hide_dropdown");
+});
 
 function choose_page_scale(selection) {
 	set_page_scale(selection);
@@ -185,6 +200,24 @@ function set_page_scale(selection) {
 			break;
 	}
 	document.querySelector(".reader_settings").classList.add("hide_dropdown");
+}
+
+if (localStorage.colorize_page === undefined) {
+	localStorage.colorize_page = true;
+}
+
+if (localStorage.colorize_page) {
+	document.querySelector("#comicpage").classList.add("colorize_page");
+}
+
+function toggle_page_colorize() {
+	localStorage.colorize_page ^= true;
+	console.log(localStorage.colorize_page);
+	if (localStorage.colorize_page == 1) {
+		document.querySelector("#comicpage").classList.add("colorize_page");
+	} else {
+		document.querySelector("#comicpage").classList.remove("colorize_page");
+	}
 }
 
 // dynamically react to window resizing, pretty glitchy at the moment
@@ -259,10 +292,18 @@ function update_page_info() {
 		current_page[reader_language].title;
 }
 
-function on_click_page() {
-	document
-		.getElementById("comicpage")
-		.scrollIntoView({ behavior: "smooth", block: "start" });
+function on_click_page(event) {
+	let rect = document.getElementById("comicpage").getBoundingClientRect();
+	const quarter = (rect.right - rect.left) / 4;
+	if (event.clientX < rect.left + quarter) {
+		nav_to_prev_page();
+	} else if (event.clientX > rect.right - quarter) {
+		nav_to_next_page();
+	} else {
+		document
+			.getElementById("comicpage")
+			.scrollIntoView({ behavior: "smooth", block: "start" });
+	}
 }
 
 async function nav_to_page_number(page_num) {
@@ -365,5 +406,5 @@ function update_disqus() {
 }
 
 wait_for_element(".reaction-items", (element) => {
-	console.warn(element)
+	console.warn(element);
 });

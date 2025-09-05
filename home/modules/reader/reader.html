@@ -8,26 +8,44 @@
 </head>
 <reader class="reader">
 	<div class="comicpage_nav comicpage_nav_top">
-		<a class="nav_button nav_first" onclick="nav_to_first_page()" 
-			><img src="img/comicnav/nav_first.png" data-i18n="nav_first" alt="First"
+		<a class="nav_button nav_first" onclick="nav_to_first_page()"
+			><img
+				src="img/comicnav/nav_first.png"
+				data-i18n="nav_first"
+				alt="First"
 		/></a>
 		<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-			><img src="img/comicnav/nav_previous.png" data-i18n="nav_previous" alt="Previous"
+			><img
+				src="img/comicnav/nav_previous.png"
+				data-i18n="nav_previous"
+				alt="Previous"
 		/></a>
 		<a class="nav_button nav_next" onclick="nav_to_next_page()"
-			><img src="img/comicnav/nav_previous.png" data-i18n="nav_next" alt="Next"
+			><img
+				src="img/comicnav/nav_previous.png"
+				data-i18n="nav_next"
+				alt="Next"
 		/></a>
 		<a class="nav_button nav_last" onclick="nav_to_last_page()"
-			><img src="img/comicnav/nav_first.png" data-i18n="nav_last" alt="Last"
+			><img
+				src="img/comicnav/nav_first.png"
+				data-i18n="nav_last"
+				alt="Last"
 		/></a>
 	</div>
 	<div class="reader_settings hide_dropdown">
+		<span
+			data-i18n="help_button"
+			class="help_button ninepatch_paper_2"
+			onclick="show_reader_help()"
+			>Help</span
+		>
 		<div class="scale_selector ninepatch_paper_2">
 			<span
 				data-i18n="options_scale"
 				class="toggle"
 				onclick="toggle_scale_popout()"
-				>Scale</span
+				>Settings</span
 			>
 		</div>
 		<dropdown class="ninepatch_paper_2">
@@ -50,6 +68,12 @@
 				>
 					Original
 				</li>
+				<li
+					data-i18n="options_toggle_colorize"
+					onclick="toggle_page_colorize()"
+				>
+					Colorize
+				</li>
 			</ul>
 		</dropdown>
 	</div>
@@ -59,25 +83,38 @@
 			<span id="page_name"></span>
 		</div>
 	</div>
-	<div
-		id="comicpage"
-		class="comicpage fit_both ninepatch_paper"
-		onclick="on_click_page()"
-	>
-		<img src="img/blank_page.png" />
+	<div id="comicpage" class="comicpage fit_both ninepatch_paper">
+		<img src="img/blank_page.png" onclick="on_click_page(event)" />
+		<img
+			src="img/reader_help.png"
+			class="reader_help hidden"
+			onclick="this.classList.add('hidden')"
+		/>
 	</div>
 	<div class="comicpage_nav comicpage_nav_bottom">
-		<a class="nav_button nav_first" onclick="nav_to_first_page()" 
-			><img src="img/comicnav/nav_first.png" data-i18n="nav_first" alt="First"
+		<a class="nav_button nav_first" onclick="nav_to_first_page()"
+			><img
+				src="img/comicnav/nav_first.png"
+				data-i18n="nav_first"
+				alt="First"
 		/></a>
 		<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
-			><img src="img/comicnav/nav_previous.png" data-i18n="nav_previous" alt="Previous"
+			><img
+				src="img/comicnav/nav_previous.png"
+				data-i18n="nav_previous"
+				alt="Previous"
 		/></a>
 		<a class="nav_button nav_next" onclick="nav_to_next_page()"
-			><img src="img/comicnav/nav_previous.png" data-i18n="nav_next" alt="Next"
+			><img
+				src="img/comicnav/nav_previous.png"
+				data-i18n="nav_next"
+				alt="Next"
 		/></a>
 		<a class="nav_button nav_last" onclick="nav_to_last_page()"
-			><img src="img/comicnav/nav_first.png" data-i18n="nav_last" alt="Last"
+			><img
+				src="img/comicnav/nav_first.png"
+				data-i18n="nav_last"
+				alt="Last"
 		/></a>
 	</div>
 	<div class="author_notes ninepatch_box">

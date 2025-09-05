@@ -6,11 +6,14 @@
     "nav_previous": "Previous",
     "nav_next": "Next",
     "nav_last": "Last",
-    "options_scale": "Scale",
+    "help_button": "Help",
+    "options_scale": "Settings",
     "options_scale_fit": "Fit",
     "options_scale_original": "Original",
     "options_scale_width": "Width",
+    "options_toggle_colorize": "Colorize",
     "follow_me_links": "Follow Lumaga on:",
     "mailchimp_signup": "Subscribe to Lumaga's newsletter",
-    "mailchimp_subscribe": "Subscribe"
+    "mailchimp_subscribe": "Subscribe",
+    "made_with_gloomjam": "Made with Gloomjam"
 }

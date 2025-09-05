@@ -73,16 +73,38 @@ footer {
 		}
 	}
 
-	.copyright {
-		text-align-last: right;
+	.legal {
 		background-color: var(--sitenav-background-color);
 		padding: 4px;
 		margin-top: 32px;
+		columns: 2;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		div {
+			display: flex;
+			align-items: center;
+		}
 
 		span {
-			font-size: 16px;
+			font-size: 18px;
 			color: var(--background-color);
 		}
+	}
+
+	.about_template {
+		cursor: pointer;
+
+		img {
+			height: 26px;
+			padding: 4px;
+			width: auto;
+		}
+	}
+
+	.copyright {
+		text-align-last: right;
 	}
 
 	/* Mailchimp */

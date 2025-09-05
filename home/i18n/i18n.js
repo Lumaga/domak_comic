@@ -4,6 +4,9 @@ var current_language = "en";
 function update_content(langData, root) {
 	root.querySelectorAll("[data-i18n]").forEach((element) => {
 		const key = element.getAttribute("data-i18n");
+		if (!langData[key]) {
+			return
+		}
 		try {
 			if (element.tagName == "IMG") {
 				element.alt = langData[key];

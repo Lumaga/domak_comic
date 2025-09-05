@@ -13,6 +13,19 @@ module > reader {
 		"comments comments comments";
 
 	.comicpage {
+		display: grid;
+		grid-area: comicpage;
+		justify-self: center;
+		grid-auto-columns: 1fr;
+		grid-template-areas: "comic_img";
+	}
+
+	.comicpage img {
+		grid-area: comic_img;
+	}
+
+	.reader_help {
+		display: grid;
 		grid-area: comicpage;
 		justify-self: center;
 	}
@@ -25,7 +38,8 @@ module > reader {
 		grid-area: reader_settings;
 		align-content: flex-end;
 
-		.scale_selector {
+		.scale_selector,
+		.help_button {
 			float: inline-end;
 		}
 	}
@@ -83,7 +97,7 @@ module > reader {
 	}
 
 	/* style comic page image */
-/*
+	/*
 	.comicpage_info_wrapper,
 	.scale_selector {
 		color: var(--background-color);
@@ -96,6 +110,7 @@ module > reader {
 		border-style: solid;
 	}
 */
+	.help_button,
 	.scale_selector {
 		transition: all 0.5s ease;
 		width: fit-content;
@@ -110,11 +125,10 @@ module > reader {
 
 	.reader_settings dropdown {
 		position: absolute;
-		right: 0;
-		transform: translateY(32px) translateX(-16px);
+		right: var(--scrollbar-width);
 		margin: 12px;
-        padding: 4px;
-        line-height: 24px;
+		padding: 4px;
+		line-height: 24px;
 		z-index: 1;
 
 		ul {
@@ -123,14 +137,13 @@ module > reader {
 			margin-block-end: 0;
 		}
 	}
-
+	/*
 	.reader_settings.hide_dropdown > div::after {
 		font-size: 12px;
 		transform: translateY(2px);
 
 		padding-left: 4px;
 		content: "◀";
-
 	}
 
 	.reader_settings:not(.hide_dropdown) > div::after {
@@ -139,7 +152,7 @@ module > reader {
 		padding-left: 4px;
 		content: "▼";
 	}
-
+*/
 	#comicpage {
 		max-width: calc(100vw - var(--scrollbar-width) - 12px);
 		width: fit-content;
@@ -151,17 +164,18 @@ module > reader {
 		place-self: center;
 	}
 
-	#comicpage {
+	#comicpage.colorize_page {
 		mix-blend-mode: luminosity;
 	}
 
 	#comicpage img {
-		/*box-shadow: 1px 1px 4px var(--sitenav-background-color);*/
 		width: auto;
 		height: auto;
-
-		mix-blend-mode: luminosity;
 	}
+
+/*	#comicpage img::after {
+		content: url(/img/reader_help.png);
+	}*/
 
 	#comicpage.fit_width img {
 		width: calc(100vw - var(--scrollbar-width) - 12px);
