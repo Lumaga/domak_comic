@@ -151,6 +151,10 @@ async function write_page() {
 	} catch (e) {}
 }
 
+function show_reader_help() {
+	document.querySelector(".reader_help").classList.remove("hidden");
+}
+
 function toggle_scale_popout() {
 	const element = document.querySelector(".reader_settings");
 	var rect = document
@@ -162,11 +166,26 @@ function toggle_scale_popout() {
 	element.classList.toggle("hide_dropdown");
 }
 
-function show_reader_help() {
-	document.querySelector(".reader_help").classList.remove("hidden");
-}
+document.addEventListener("click", (event) => {
+	if (
+		!event.target.classList.contains("toggle") &&
+		!document
+			.querySelector(".reader_settings")
+			.classList.contains("hide_dropdown")
+	) {
+		document
+			.querySelector(".reader_settings")
+			.classList.add("hide_dropdown");
+	}
+});
 
 document.body.addEventListener("scroll", (event) => {
+	console.log(event);
+	document.querySelector(".reader_settings").classList.add("hide_dropdown");
+});
+
+document.addEventListener("scroll", (event) => {
+	console.log(event);
 	document.querySelector(".reader_settings").classList.add("hide_dropdown");
 });
 
@@ -199,7 +218,7 @@ function set_page_scale(selection) {
 			page_el.classList.add("fit_width");
 			break;
 	}
-	document.querySelector(".reader_settings").classList.add("hide_dropdown");
+	//document.querySelector(".reader_settings").classList.add("hide_dropdown");
 }
 
 if (localStorage.colorize_page === undefined) {

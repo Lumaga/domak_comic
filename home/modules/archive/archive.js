@@ -4,7 +4,9 @@ var archive_html = "";
 document.addEventListener("click", (event) => {
 	if (event.target.parentNode.classList.contains("expandable")) {
 		console.log(event.target);
-		event.target.parentNode.classList.toggle("open");
+		event.target.parentNode
+			.querySelector(".page_collapse")
+			.classList.toggle("open");
 	}
 });
 
@@ -41,10 +43,12 @@ async function archive_main() {
 			`;
 			pages_html = pages_html.concat(html);
 		}
-		let chapter_html = `<div class="chapter expandable ninepatch_paper_2">
-		<h2>${name}</h2>
+		let chapter_html = `<div class="chapter expandable">
+		<h2 class="ninepatch_title">${name}</h2>
+		<div class="page_collapse ninepatch_paper_2">
 		<div class="page_list">
 		${pages_html}
+		</div>
 		</div>
 		</div>`;
 		archive_html = archive_html.concat(chapter_html);
@@ -53,7 +57,10 @@ async function archive_main() {
 
 	wait_for_element("#archive_content", (element) => {
 		element.innerHTML = archive_html;
-		document.querySelector(".chapter:last-of-type").classList.add("open");
+		document
+			.querySelector(".chapter:last-of-type")
+			.querySelector(".page_collapse")
+			.classList.add("open");
 	});
 }
 

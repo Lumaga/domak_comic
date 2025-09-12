@@ -1,6 +1,6 @@
 .archive {
 	justify-self: center;
-	interpolate-size: allow-keywords;
+	/*interpolate-size: allow-keywords;*/
 	display: grid;
 
 	.expandable > .page_list {
@@ -10,13 +10,16 @@
 		-moz-transition: height ease 0.5s;
 		-o-transition: height ease 0.5s;
 		transition: height ease 0.5s;
-		height: 0px;
+		height: fit-content;
+		padding-top: 10px;
+		transform: translateY(-20px);
+		z-index: -1;
 	}
-
+	/*
 	.expandable.open > .page_list {
 		height: fit-content;
 	}
-
+*/
 	h1,
 	h2,
 	.chapter,
@@ -32,21 +35,59 @@
 	}
 
 	.chapter {
-		mix-blend-mode: luminosity;
 		display: grid;
+
+		h2 {
+			width: 100%;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			flex-direction: row;
+			align-items: center;
+
+			&::before {
+				content: url(/img/wax_seal.svg);
+				margin: -40px 5px;
+			}
+		}
 	}
 
+	.page_collapse {
+		display: grid;
+		align-items: baseline;
+		overflow: hidden;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows .5s ease-in-out;
+        transform: translateY(-20px);
+        z-index: -1;
+	}
+	
+	.page_collapse.open {
+		grid-template-rows: 1fr;
+	}
+	
+	.page_list {
+		/*min-height: 0;*/
+		overflow: hidden;
+		display: grid;
+		padding-top: 20px;
+		grid-auto-rows: 1fr;
+		background-image: url(/img/ribbon.png);
+		background-repeat: repeat-y;
+		background-position: 34px;
+	}
+	
 	.page {
-		padding: 16px;
+		/*mix-blend-mode: luminosity;*/
 		display: flex;
 		cursor: pointer;
 		padding: 8px 64px 8px 16px;
 		align-items: center;
 		justify-content: space-between;
-		
+
 		h3 {
 			margin: 0;
-		
+
 			:hover {
 				text-decoration: underline;
 			}
@@ -58,7 +99,7 @@
 			height: 68px;
 		}
 
-		.page_info{
+		.page_info {
 			padding-left: 16px;
 			display: flex;
 			flex-direction: column;
