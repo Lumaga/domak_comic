@@ -146,7 +146,7 @@ addEventListener("DOMContentLoaded", (event) => {
 			fetch(`/modules/${name}/${name}.html`)
 				.then((response) => response.text())
 				.then((text) => {
-					gloomlet.innerHTML = text;
+					gloomlet.outerHTML = text;
 					console.log(`loaded html for gloomlet ${name}`);
 				})
 		);

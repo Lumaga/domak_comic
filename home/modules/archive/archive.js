@@ -8,21 +8,28 @@ class Archive {
 					.classList.toggle("open");
 			}
 		});
-		
+
 		load_db().then((success) => {
 			if (success) {
-				this._write();
+				this._write().then(() => 
+				document
+					.querySelector(".chapter:last-of-type")
+					.querySelector(".page_collapse")
+					.classList.toggle("open")
+				)
 			} else {
-				const new_url = new URL(window.location.origin + "/db_load_error.html");
+				const new_url = new URL(
+					window.location.origin + "/db_load_error.html"
+				);
 				window.location.assign(new_url);
 			}
 		});
 	}
-	
+
 	async update_language() {
 		this._write();
 	}
-	
+
 	async _write() {
 		let archive_html = "";
 		for (const chapter of Object.keys(db.published)) {

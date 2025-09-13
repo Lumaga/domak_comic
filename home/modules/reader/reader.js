@@ -8,6 +8,7 @@ class Reader {
 	constructor() {
 		load_db().then((success) => {
 			if (success) {
+				this.max_page_number = page_list.length;
 				this._main();
 			} else {
 				const new_url = new URL(window.location.origin + "/db_load_error.html");
@@ -312,6 +313,7 @@ class Reader {
 
 	nav_to_last_page() {
 		this.nav_to_page_number(this.max_page_number).then(() => {
+			console.log("foo");
 			localStorage.latest_read_page = this.current_page.identifier;
 		});
 	}

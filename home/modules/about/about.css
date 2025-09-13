@@ -1,5 +1,5 @@
 
-module[name="about"] {
+gloomlet[name="about"] {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -20,10 +20,12 @@ module[name="about"] {
     .float_image_right {
         display: grid;
         grid-auto-flow: column;
+        align-items: center;
     }
 
     .portrait {
         position: relative;
         margin: -48px 20px;
+        max-width: 100%;
     }
 }

@@ -1,4 +1,4 @@
-.archive {
+gloomlet[name="archive"] {
 	justify-self: center;
 	/*interpolate-size: allow-keywords;*/
 	display: grid;

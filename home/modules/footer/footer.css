@@ -1,9 +1,13 @@
-footer {
-	display: grid;
-	grid-template-rows: repeat(3, min-content);
-	grid-auto-columns: 1fr;
-	gap: 0px 0px;
-	grid-auto-flow: row;
+gloomlet[name="footer"] {
+	margin-top: auto;
+
+	.footer_contents {
+		display: grid;
+		grid-template-rows: repeat(3, min-content);
+		grid-auto-columns: 1fr;
+		gap: 0px 0px;
+		grid-auto-flow: row;
+	}
 
 	.social_links {
 		display: grid;
@@ -45,6 +49,7 @@ footer {
 
 	.social_links {
 		justify-self: center;
+		max-width: 800px;
 
 		.links {
 			display: flex;
