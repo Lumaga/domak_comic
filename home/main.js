@@ -1,3 +1,5 @@
+gloomlets = [];
+
 window.addEventListener("load", function () {
 	let html = document.querySelector("html");
 	let scroller = document.querySelector("body");
@@ -81,11 +83,11 @@ let animation_counter = 0;
 function wait_for_element(selector, func) {
 	parent = document.body;
 
-    const animationName = `waitForElement__${animation_counter++}`;
+	const animationName = `waitForElement__${animation_counter++}`;
 
-    const style = document.createElement("style");
+	const style = document.createElement("style");
 
-    const keyFrames = `
+	const keyFrames = `
       @keyframes ${animationName} {
         from { opacity: 1; }
         to { opacity: 1; }
@@ -96,44 +98,78 @@ function wait_for_element(selector, func) {
       }
     `;
 
-    style.appendChild(new Text(keyFrames));
+	style.appendChild(new Text(keyFrames));
 
-    document.head.appendChild(style);
+	document.head.appendChild(style);
 
-    const eventListener = (event) => {
-        if (event.animationName === animationName) {
-            func(event.target);
-        }
-    };
+	const eventListener = (event) => {
+		if (event.animationName === animationName) {
+			func(event.target);
+		}
+	};
 
-    document.addEventListener("animationstart", eventListener, false);
+	document.addEventListener("animationstart", eventListener, false);
 }
 
-function dynamically_load_script(url) {
-    var script = document.createElement("script");
-    script.src = url;   
-    document.body.appendChild(script);
-}
+const dynamically_load_script = (url, name) =>
+	new Promise((resolve, reject) => {
+		var script = document.createElement("script");
+		script.src = url;
+		document.body.appendChild(script);
+		console.log(`loaded js for gloomlet ${name}`);
+	});
 
-wait_for_element("module", (element) => {
-	if (element.getAttribute("name")) {
-		const name = element.getAttribute("name");
-		try {
-			fetch(`modules/${name}/${name}.css`)
-				.then((response) => {
-					const linktag = document.createElement("LINK");
-					linktag.setAttribute("href", `modules/${name}/${name}.css`);
-					linktag.setAttribute("rel", "stylesheet");
-					linktag.setAttribute("type", "text/css");
-					linktag.setAttribute("media", "all");
-					document.head.appendChild(linktag);
-				}).then(() => {
-					fetch(`modules/${name}/${name}.html`)
-						.then((response) => response.text())
-							.then((text) =>	element.innerHTML = text)
-								.then(() => dynamically_load_script(`modules/${name}/${name}.js`))
-									.then(() => update_module_lang(name));
-					});
-		} catch(e) {}
-	}
+addEventListener("DOMContentLoaded", (event) => {
+	var css = [];
+	var html = [];
+	var js = [];
+
+	document.querySelectorAll("module").forEach((gloomlet) => {
+		const name = gloomlet.getAttribute("name");
+		if (!name) {
+			return;
+		}
+
+		const c = Promise.resolve(
+			fetch(`/modules/${name}/${name}.css`).then((response) => {
+				const linktag = document.createElement("LINK");
+				linktag.setAttribute("href", `modules/${name}/${name}.css`);
+				linktag.setAttribute("rel", "stylesheet");
+				linktag.setAttribute("type", "text/css");
+				linktag.setAttribute("media", "all");
+				document.head.appendChild(linktag);
+				console.log(`loaded css for gloomlet ${name}`);
+			})
+		);
+		css.push(c);
+		const h = Promise.resolve(
+			fetch(`/modules/${name}/${name}.html`)
+				.then((response) => response.text())
+				.then((text) => {
+					gloomlet.innerHTML = text;
+					console.log(`loaded html for gloomlet ${name}`);
+				})
+		);
+		html.push(h);
+		const j = Promise.resolve(
+			fetch(`/modules/${name}/${name}.js`).then((r) => {
+				var script = document.createElement("script");
+				script.src = `/modules/${name}/${name}.js`;
+				document.body.appendChild(script);
+				console.log(`loaded js for gloomlet ${name}`);
+			})
+		);
+		js.push(j);
+	});
+	Promise.allSettled(css).then((r) => {
+		console.log(`loaded all CSS`);
+		Promise.allSettled(html).then((r) => {
+			console.log(`loaded all HTML`);
+			Promise.allSettled(js).then((r) => {
+				console.log(`loaded all JS`);
+				console.log("all content loaded");
+				i18n.update_content();
+			});
+		});
+	});
 });

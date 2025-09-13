@@ -1,32 +1,24 @@
-<head>
-	<link
-		href="templates/reader.css"
-		rel="stylesheet"
-		type="text/css"
-		media="all"
-	/>
-</head>
 <reader class="reader">
 	<div class="comicpage_nav comicpage_nav_top">
-		<a class="nav_button nav_first" onclick="nav_to_first_page()"
+		<a class="nav_button nav_first" onclick="reader.nav_to_first_page()"
 			><img
 				src="img/comicnav/nav_first.png"
 				data-i18n="nav_first"
 				alt="First"
 		/></a>
-		<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
+		<a class="nav_button nav_prev" onclick="reader.nav_to_prev_page()"
 			><img
 				src="img/comicnav/nav_previous.png"
 				data-i18n="nav_previous"
 				alt="Previous"
 		/></a>
-		<a class="nav_button nav_next" onclick="nav_to_next_page()"
+		<a class="nav_button nav_next" onclick="reader.nav_to_next_page()"
 			><img
 				src="img/comicnav/nav_previous.png"
 				data-i18n="nav_next"
 				alt="Next"
 		/></a>
-		<a class="nav_button nav_last" onclick="nav_to_last_page()"
+		<a class="nav_button nav_last" onclick="reader.nav_to_last_page()"
 			><img
 				src="img/comicnav/nav_first.png"
 				data-i18n="nav_last"
@@ -37,14 +29,14 @@
 		<span
 			data-i18n="help_button"
 			class="help_button ninepatch_paper_2"
-			onclick="show_reader_help()"
+			onclick="reader.show_reader_help()"
 			>Help</span
 		>
 		<div class="scale_selector ninepatch_paper_2">
 			<span
 				data-i18n="options_scale"
 				class="toggle"
-				onclick="toggle_scale_popout()"
+				onclick="reader.toggle_scale_popout()"
 				>Settings</span
 			>
 		</div>
@@ -52,25 +44,25 @@
 			<ul>
 				<li
 					data-i18n="options_scale_width"
-					onclick="choose_page_scale('width')"
+					onclick="reader.choose_page_scale('width')"
 				>
 					Width
 				</li>
 				<li
 					data-i18n="options_scale_fit"
-					onclick="choose_page_scale('both')"
+					onclick="reader.choose_page_scale('both')"
 				>
 					Fit
 				</li>
 				<li
 					data-i18n="options_scale_original"
-					onclick="choose_page_scale('original')"
+					onclick="reader.choose_page_scale('original')"
 				>
 					Original
 				</li>
 				<li
 					data-i18n="options_toggle_colorize"
-					onclick="toggle_page_colorize()"
+					onclick="reader.toggle_page_colorize()"
 				>
 					Colorize
 				</li>
@@ -84,7 +76,7 @@
 		</div>
 	</div>
 	<div id="comicpage" class="comicpage fit_both ninepatch_paper">
-		<img src="img/blank_page.png" onclick="on_click_page(event)" />
+		<img src="img/blank_page.png" onclick="reader.on_click_page(event)" />
 		<img
 			src="img/reader_help.png"
 			class="reader_help hidden"
@@ -92,25 +84,25 @@
 		/>
 	</div>
 	<div class="comicpage_nav comicpage_nav_bottom">
-		<a class="nav_button nav_first" onclick="nav_to_first_page()"
+		<a class="nav_button nav_first" onclick="reader.nav_to_first_page()"
 			><img
 				src="img/comicnav/nav_first.png"
 				data-i18n="nav_first"
 				alt="First"
 		/></a>
-		<a class="nav_button nav_prev" onclick="nav_to_prev_page()"
+		<a class="nav_button nav_prev" onclick="reader.nav_to_prev_page()"
 			><img
 				src="img/comicnav/nav_previous.png"
 				data-i18n="nav_previous"
 				alt="Previous"
 		/></a>
-		<a class="nav_button nav_next" onclick="nav_to_next_page()"
+		<a class="nav_button nav_next" onclick="reader.nav_to_next_page()"
 			><img
 				src="img/comicnav/nav_previous.png"
 				data-i18n="nav_next"
 				alt="Next"
 		/></a>
-		<a class="nav_button nav_last" onclick="nav_to_last_page()"
+		<a class="nav_button nav_last" onclick="reader.nav_to_last_page()"
 			><img
 				src="img/comicnav/nav_first.png"
 				data-i18n="nav_last"

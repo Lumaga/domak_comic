@@ -1,59 +1,75 @@
-var current_language = "en";
-
 // Function to update content based on selected language
-function update_content(langData, root) {
-	root.querySelectorAll("[data-i18n]").forEach((element) => {
-		const key = element.getAttribute("data-i18n");
-		if (!langData[key]) {
-			return
-		}
-		try {
-			if (element.tagName == "IMG") {
-				element.alt = langData[key];
-				element.title = langData[key];
-			} else if (element.tagName == "INPUT" && element.type == "submit") {
-				element.value = langData[key];
-			} else {
-				element.innerHTML = langData[key];
-			}
-		} catch (e) {
-			console.log(`No translation found for ${key}`);
-		}
-	});
-}
+localStorage.language =
+	localStorage.language || document.documentElement.lang || "en";
 
-// Function to fetch language data
-async function fetch_language_data(lang) {
-	try {
-		const response = await fetch(`i18n/${lang}.json`);
-		const lang_obj = new Object({ identifier: lang });
-		Object.defineProperty(lang_obj, "replacements", {
-			value: JSON.parse(await response.text()),
+class I18n {
+	language_data;
+
+	constructor() {
+		this.set_language(localStorage.language);
+	}
+
+	async set_language(lang) {
+		localStorage.language = lang;
+		this.language_data = await this._fetch_language_data(localStorage.language);
+		this.update_content();
+	}
+
+	async update_content() {
+		document.querySelectorAll("[data-i18n]").forEach((element) => {
+			const key = element.getAttribute("data-i18n");
+			if (!this.language_data.replacements[key]) {
+				return;
+			}
+			try {
+				if (element.tagName == "IMG") {
+					element.alt = this.language_data.replacements[key];
+					element.title = this.language_data.replacements[key];
+				} else if (
+					element.tagName == "INPUT" &&
+					element.type == "submit"
+				) {
+					element.value = this.language_data.replacements[key];
+				} else {
+					element.innerHTML = this.language_data.replacements[key];
+				}
+			} catch (e) {
+				console.log(`No translation found for ${key}`);
+			}
 		});
-		//console.log(lang_obj);
-		return lang_obj;
-	} catch (e) {
-		console.error(e);
-		return e;
+
+		document.querySelectorAll("[language]").forEach((element) => {
+			if (element.getAttribute("language") == localStorage.language) {
+				console.log("showing ", element);
+				element.classList.remove("hidden");
+			} else {
+				console.log("hiding ", element);
+				element.classList.add("hidden");
+			}
+		});
+
+		for (const gloomlet of gloomlets) {
+			try {
+				gloomlet.update_language();
+			} catch(e) {}
+		}
+	}
+
+	// Function to fetch language data
+	async _fetch_language_data(lang) {
+		console.log(lang);
+		try {
+			const response = await fetch(`/i18n/${lang}.json`);
+			const lang_obj = new Object({ identifier: lang });
+			Object.defineProperty(lang_obj, "replacements", {
+				value: JSON.parse(await response.text()),
+			});
+			return lang_obj;
+		} catch (e) {
+			console.error(e);
+			return e;
+		}
 	}
 }
 
-async function set_current_language(lang_obj, root) {
-	current_language = lang_obj.identifier;
-	document.querySelector("html").setAttribute("lang", current_language);
-	update_content(lang_obj.replacements, root);
-}
-
-async function set_language(lang) {
-	const lang_obj = await fetch_language_data(lang);
-	set_current_language(await lang_obj, document);
-	localStorage.lang = lang;
-	//console.log(localStorage);
-}
-
-async function update_module_lang(name) {
-	const module_root = document.querySelector(`module[name="${name}"]`);
-	const lang = localStorage.lang ? localStorage.lang : current_language;
-	const lang_obj = await fetch_language_data(lang);
-	update_content(await lang_obj.replacements, module_root);
-}
+const i18n = new I18n();
