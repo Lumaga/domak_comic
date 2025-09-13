@@ -133,7 +133,6 @@ body {
 	/*overflow-x: hidden;*/
 	display: flex;
 	flex-flow: column nowrap;
-	height: 100%;
 	/*align-content: space-between;*/
 }
 
