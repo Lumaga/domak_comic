@@ -111,65 +111,39 @@ function wait_for_element(selector, func) {
 	document.addEventListener("animationstart", eventListener, false);
 }
 
-const dynamically_load_script = (url, name) =>
-	new Promise((resolve, reject) => {
-		var script = document.createElement("script");
-		script.src = url;
-		document.body.appendChild(script);
-		console.log(`loaded js for gloomlet ${name}`);
-	});
-
-addEventListener("DOMContentLoaded", (event) => {
-	var css = [];
-	var html = [];
-	var js = [];
-
-	document.querySelectorAll("module").forEach((gloomlet) => {
-		const name = gloomlet.getAttribute("name");
-		if (!name) {
-			return;
+wait_for_element("gloomlet", async (element) => {
+	if (element.getAttribute("name")) {
+		const name = element.getAttribute("name");
+		console.log(name);
+		const js = async () => {
+			var script = document.createElement("script");
+			script.src = `gloomlets/${name}/${name}.js`;
+			document.body.appendChild(script);
+			console.log(`loaded JS for: ${name}`);
 		}
-
-		const c = Promise.resolve(
-			fetch(`/modules/${name}/${name}.css`).then((response) => {
-				const linktag = document.createElement("LINK");
-				linktag.setAttribute("href", `modules/${name}/${name}.css`);
-				linktag.setAttribute("rel", "stylesheet");
-				linktag.setAttribute("type", "text/css");
-				linktag.setAttribute("media", "all");
-				document.head.appendChild(linktag);
-				console.log(`loaded css for gloomlet ${name}`);
-			})
-		);
-		css.push(c);
-		const h = Promise.resolve(
-			fetch(`/modules/${name}/${name}.html`)
+		const html = async () => {
+			fetch(`gloomlets/${name}/${name}.html`)
 				.then((response) => response.text())
-				.then((text) => {
-					gloomlet.outerHTML = text;
-					console.log(`loaded html for gloomlet ${name}`);
-				})
-		);
-		html.push(h);
-		const j = Promise.resolve(
-			fetch(`/modules/${name}/${name}.js`).then((r) => {
-				var script = document.createElement("script");
-				script.src = `/modules/${name}/${name}.js`;
-				document.body.appendChild(script);
-				console.log(`loaded js for gloomlet ${name}`);
-			})
-		);
-		js.push(j);
-	});
-	Promise.allSettled(css).then((r) => {
-		console.log(`loaded all CSS`);
-		Promise.allSettled(html).then((r) => {
-			console.log(`loaded all HTML`);
-			Promise.allSettled(js).then((r) => {
-				console.log(`loaded all JS`);
-				console.log("all content loaded");
-				i18n.update_content();
-			});
-		});
-	});
+					.then((text) =>	{
+						element.innerHTML = text;
+						console.log("loaded HTML for: ", name);
+						js();
+						i18n.update_content(name);
+					});
+		}
+		const css = async () => {
+			fetch(`gloomlets/${name}/${name}.css`)
+				.then(() => {
+					const linktag = document.createElement("LINK");
+					linktag.setAttribute("href", `gloomlets/${name}/${name}.css`);
+					linktag.setAttribute("rel", "stylesheet");
+					linktag.setAttribute("type", "text/css");
+					linktag.setAttribute("media", "all");
+					document.head.appendChild(linktag);
+					console.log("loaded CSS for: ", name);
+					html();
+				});
+		}
+		css();
+	}
 });

@@ -1,4 +1,4 @@
-module > chimebar#chimebar[data-dir="up"] {
+gloomlet[name="chimebar"] > #chimebar[data-dir="up"] {
 
 		padding-bottom: 0;
 		padding-top: 60px;

@@ -15,8 +15,12 @@ class I18n {
 		this.update_content();
 	}
 
-	async update_content() {
-		document.querySelectorAll("[data-i18n]").forEach((element) => {
+	async update_content(name) {
+		const root = name ? document.querySelector(`gloomlet[name=${name}]`) :  document;
+
+		console.log("updating language data for: ", root);
+	
+		root.querySelectorAll("[data-i18n]").forEach((element) => {
 			const key = element.getAttribute("data-i18n");
 			if (!this.language_data.replacements[key]) {
 				return;
@@ -38,7 +42,7 @@ class I18n {
 			}
 		});
 
-		document.querySelectorAll("[language]").forEach((element) => {
+		root.querySelectorAll("[language]").forEach((element) => {
 			if (element.getAttribute("language") == localStorage.language) {
 				console.log("showing ", element);
 				element.classList.remove("hidden");
@@ -48,10 +52,16 @@ class I18n {
 			}
 		});
 
-		for (const gloomlet of gloomlets) {
+		if (name) {
 			try {
-				gloomlet.update_language();
-			} catch(e) {}
+					root.update_language();
+				} catch(e) {}
+		} else {
+			for (const gloomlet of gloomlets) {
+				try {
+					gloomlet.update_language();
+				} catch(e) {}
+			}
 		}
 	}
 
