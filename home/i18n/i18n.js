@@ -18,7 +18,7 @@ class I18n {
 	async update_content(name) {
 		const root = name ? document.querySelector(`gloomlet[name=${name}]`) :  document;
 
-		console.log("updating language data for: ", root);
+		console.log("updating language data for root: ", root);
 	
 		root.querySelectorAll("[data-i18n]").forEach((element) => {
 			const key = element.getAttribute("data-i18n");
@@ -67,7 +67,7 @@ class I18n {
 
 	// Function to fetch language data
 	async _fetch_language_data(lang) {
-		console.log(lang);
+		console.log("current language is: ", lang);
 		try {
 			const response = await fetch(`/i18n/${lang}.json`);
 			const lang_obj = new Object({ identifier: lang });

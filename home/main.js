@@ -114,7 +114,7 @@ function wait_for_element(selector, func) {
 wait_for_element("gloomlet", async (element) => {
 	if (element.getAttribute("name")) {
 		const name = element.getAttribute("name");
-		console.log(name);
+		console.log("loading content for gloomlet", name, "at", element);
 		const js = async () => {
 			var script = document.createElement("script");
 			script.src = `gloomlets/${name}/${name}.js`;
