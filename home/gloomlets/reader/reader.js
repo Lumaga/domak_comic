@@ -368,4 +368,4 @@ class Reader {
 }
 
 const reader = new Reader();
-gloomlets.push(reader);
+gloomlet_scripts.push(reader);

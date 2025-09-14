@@ -65,4 +65,4 @@ class Archive {
 }
 
 const archive = new Archive();
-gloomlets.push(archive);
+gloomlet_scripts.push(archive);

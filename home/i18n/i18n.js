@@ -2,16 +2,31 @@
 localStorage.language =
 	localStorage.language || document.documentElement.lang || "en";
 
-class I18n {
-	language_data;
+var lang_db = {};
 
+class I18n {
 	constructor() {
 		this.set_language(localStorage.language);
 	}
 
 	async set_language(lang) {
 		localStorage.language = lang;
-		this.language_data = await this._fetch_language_data(localStorage.language);
+		const new_data = await this._load_language_data("i18n", localStorage.language);
+		if (new_data) {
+			console.log("found new data ", new_data);
+			this._merge(lang_db, new_data);
+			console.log(JSON.stringify(lang_db));
+		}
+		for (const name of gloomlet_names) {
+			const path = `gloomlets/${name}`;
+			const new_data = await this._load_language_data(path, localStorage.language);
+			if (new_data) {
+				console.log("found new data ", new_data);
+				this._merge(lang_db, new_data);
+				console.log(JSON.stringify(lang_db));
+			}
+		}
+		console.log(lang_db);
 		this.update_content();
 	}
 
@@ -22,20 +37,20 @@ class I18n {
 	
 		root.querySelectorAll("[data-i18n]").forEach((element) => {
 			const key = element.getAttribute("data-i18n");
-			if (!this.language_data.replacements[key]) {
+			if (!lang_db[localStorage.language][key]) {
 				return;
 			}
 			try {
 				if (element.tagName == "IMG") {
-					element.alt = this.language_data.replacements[key];
-					element.title = this.language_data.replacements[key];
+					element.alt = lang_db[localStorage.language][key];
+					element.title = lang_db[localStorage.language][key];
 				} else if (
 					element.tagName == "INPUT" &&
 					element.type == "submit"
 				) {
-					element.value = this.language_data.replacements[key];
+					element.value = lang_db[localStorage.language][key];
 				} else {
-					element.innerHTML = this.language_data.replacements[key];
+					element.innerHTML = lang_db[localStorage.language][key];
 				}
 			} catch (e) {
 				console.log(`No translation found for ${key}`);
@@ -57,7 +72,7 @@ class I18n {
 					root.update_language();
 				} catch(e) {}
 		} else {
-			for (const gloomlet of gloomlets) {
+			for (const gloomlet of gloomlet_scripts) {
 				try {
 					gloomlet.update_language();
 				} catch(e) {}
@@ -66,19 +81,34 @@ class I18n {
 	}
 
 	// Function to fetch language data
-	async _fetch_language_data(lang) {
-		console.log("current language is: ", lang);
+	async _load_language_data(root, lang) {
+		console.log("loading", lang, "for", root);
 		try {
-			const response = await fetch(`/i18n/${lang}.json`);
-			const lang_obj = new Object({ identifier: lang });
-			Object.defineProperty(lang_obj, "replacements", {
-				value: JSON.parse(await response.text()),
+			const response = await fetch(`/${root}/${lang}.json`).then(response => response.json());
+			const lang_obj = new Object();
+			Object.defineProperty(lang_obj, lang, {
+				value: response,
 			});
 			return lang_obj;
 		} catch (e) {
 			console.error(e);
-			return e;
+			return false;
 		}
+	}
+
+	async load_gloomlet(name){
+		const path = `gloomlets/${name}`;
+		const new_data = await this._load_language_data(path, localStorage.language);
+		if (new_data) {
+			console.log("found new data ", new_data);
+			this._merge(lang_db, new_data);
+		}
+		console.log(JSON.stringify(lang_db));
+		this.update_content(name);
+	}
+
+	_merge(target, source) {
+		target[localStorage.language] = {...target[localStorage.language], ...source[localStorage.language]}
 	}
 }
 
