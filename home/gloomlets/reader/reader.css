@@ -32,19 +32,24 @@ gloomlet[name="reader"] {
 		grid-area: comicpage;
 		justify-self: center;
 		grid-auto-columns: 1fr;
-		grid-template-areas: "comic_img";
 		place-items: anchor-center;
 		max-width: min-content;
-		z-index: 0;
-	}
+		z-index: 0;	}
 
+	.comicpage {
+		display: grid;
+		justify-self: center;
+		grid-auto-columns: 1fr;
+		grid-template-areas: "comic_img";
+	}
+		
 	.comicpage img {
 		grid-area: comic_img;
 	}
 
 	.reader_help {
 		display: grid;
-		grid-area: comicpage;
+		grid-area: comic_img;
 		justify-self: center;
 	}
 
