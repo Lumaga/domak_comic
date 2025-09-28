@@ -152,9 +152,10 @@ class Reader {
 		var rect = document
 			.querySelector(".scale_selector")
 			.getBoundingClientRect();
+		console.log(rect);
 		const dropdown = document.querySelector(".reader_settings dropdown");
 		dropdown.style.top = `${rect.bottom}px`;
-		//dropdown.style.right = `${rect.right - rect.left}px`;
+		dropdown.style.left = `${rect.left}px`;
 		element.classList.toggle("hide_dropdown");
 	}
 

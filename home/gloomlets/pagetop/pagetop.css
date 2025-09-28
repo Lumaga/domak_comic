@@ -7,7 +7,7 @@ gloomlet[name="pagetop"] {
 	grid-template-areas:
 		"header"
 		"site_nav";
-	justify-items: center;
+	place-content: center;
 
 	.header {
 		display: grid;
@@ -15,9 +15,8 @@ gloomlet[name="pagetop"] {
 		gap: 0px 0px;
 		grid-auto-flow: row;
 		grid-area: header;
-		max-width: 800px;
-        width: -webkit-fill-available;
-		width: -moz-available;
+		width: 840px;
+		margin: 0 auto;
 	}
 
 	.deco_arch {
@@ -41,6 +40,7 @@ gloomlet[name="pagetop"] {
 		position: relative;
 		justify-self: center;
 		padding-top: 20px;
+		margin-bottom: -12px;
 
 		a:hover {
 			opacity: 1;
@@ -53,6 +53,7 @@ gloomlet[name="pagetop"] {
 		position: relative;
 		justify-self: center;
 		padding: 8px;
+		height: fit-content;
 	}
 
 	/* separator */
