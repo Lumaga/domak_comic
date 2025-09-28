@@ -195,6 +195,10 @@ class Reader {
 		}
 	}
 
+	toggle_text_description() {
+		document.querySelector(".text_description").classList.toggle("open");
+	}
+
 	// dynamically react to window resizing, pretty glitchy at the moment
 	// TODO: fix the glitchyness
 	/*

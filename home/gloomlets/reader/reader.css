@@ -15,12 +15,15 @@ gloomlet[name="reader"] {
 			"comments comments comments";
 	}
 
-	.comicpage {
+	.page_container {
 		display: grid;
 		grid-area: comicpage;
 		justify-self: center;
 		grid-auto-columns: 1fr;
 		grid-template-areas: "comic_img";
+		place-items: anchor-center;
+		max-width: min-content;
+		z-index: 0;
 	}
 
 	.comicpage img {
@@ -158,7 +161,7 @@ gloomlet[name="reader"] {
 */
 	#comicpage {
 		max-width: calc(100vw - var(--scrollbar-width) - 12px);
-		width: fit-content;
+		width: min-content;
 		overflow-x: auto;
 		text-align: center;
 	}
@@ -205,6 +208,36 @@ gloomlet[name="reader"] {
 	#comicpage.fit_original img {
 		width: unset;
 		height: unset;
+	}
+
+	.text_description_toggle {
+		width: fit-content;
+		margin-left: auto;
+		padding: 4px;
+		padding-top: 20px;
+		margin-top: -20px;
+		margin-right: 40px;
+		z-index: -5;
+	}
+
+	.text_description {
+		z-index: -10;
+		padding: 8px;
+		padding-top: 40px;
+		margin: 0 20px;
+		margin-top: -140px;
+		grid-template-rows: 0fr;
+		display: grid;
+		transition: margin-top .5s ease-in-out, grid-template-rows .5s ease-in-out;
+
+		& > div {
+			overflow: hidden;
+		}
+	}
+
+	.text_description.open {
+		margin-top: -40px;
+		grid-template-rows: 1fr;
 	}
 
 	.author_notes {

@@ -1,0 +1,11 @@
+gloomlet[name="sitenav"] {
+	background-color: var(--sitenav-background-color);
+	font-family: "Gabriela", serif;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	a {
+		font-size: 26px;
+	}
+}

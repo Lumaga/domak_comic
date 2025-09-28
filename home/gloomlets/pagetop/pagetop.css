@@ -61,12 +61,8 @@ gloomlet[name="pagetop"] {
 		padding: 0 10px;
 	}
 
-	.site_nav {
+	gloomlet[name="sitenav"] {
 		grid-area: site_nav;
-
-		a {
-			font-size: 26px;
-		}
 	}
 
 	.language {
@@ -83,13 +79,5 @@ gloomlet[name="pagetop"] {
 		width: 100%;
 		max-width: 500px;
 		padding: 12px 0;
-	}
-
-	.site_nav {
-		background-color: var(--sitenav-background-color);
-		font-family: "Gabriela", serif;
-		width: 100%;
-		display: flex;
-		justify-content: center;
 	}
 }
