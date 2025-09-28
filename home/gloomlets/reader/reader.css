@@ -226,9 +226,10 @@ gloomlet[name="reader"] {
 		padding-top: 40px;
 		margin: 0 20px;
 		margin-top: -140px;
+		margin-bottom: 40px;
 		grid-template-rows: 0fr;
 		display: grid;
-		transition: margin-top .5s ease-in-out, grid-template-rows .5s ease-in-out;
+		transition: margin-top .5s ease-in-out, grid-template-rows .5s ease-in-out, margin-bottom .5s ease-in-out;
 
 		& > div {
 			overflow: hidden;
@@ -238,6 +239,7 @@ gloomlet[name="reader"] {
 	.text_description.open {
 		margin-top: -40px;
 		grid-template-rows: 1fr;
+		margin-bottom: 0px;
 	}
 
 	.author_notes {
