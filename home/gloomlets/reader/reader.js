@@ -72,10 +72,12 @@ class Reader {
 						this.set_page_scale(value);
 						break;
 					case "colorize_page":
-						if (localStorage.colorize_page) {
-							document.querySelector("#comicpage").classList.add("colorize_page");
+						if (localStorage.colorize_page == 1) {
+							console.log("colorize on", localStorage.colorize_page);
+							document.querySelector(".page_container").classList.add("colorize_page");
 						} else {
-							document.querySelector("#comicpage").classList.remove("colorize_page");
+							console.log("colorize off", localStorage.colorize_page);
+							document.querySelector(".page_container").classList.remove("colorize_page");
 						}
 						break;
 					default:
@@ -187,11 +189,13 @@ class Reader {
 	}
 
 	toggle_page_colorize() {
+		console.log("colorize before", localStorage.colorize_page);
 		localStorage.colorize_page ^= true;
+		console.log("colorize after", localStorage.colorize_page);
 		if (localStorage.colorize_page == 1) {
-			document.querySelector("#comicpage").classList.add("colorize_page");
+			document.querySelector(".page_container").classList.add("colorize_page");
 		} else {
-			document.querySelector("#comicpage").classList.remove("colorize_page");
+			document.querySelector(".page_container").classList.remove("colorize_page");
 		}
 	}
 

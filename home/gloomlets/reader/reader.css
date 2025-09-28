@@ -170,7 +170,7 @@ gloomlet[name="reader"] {
 		place-self: center;
 	}
 
-	#comicpage.colorize_page {
+	.colorize_page {
 		mix-blend-mode: luminosity;
 	}
 
