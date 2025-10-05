@@ -1,138 +1,92 @@
 gloomlet[name="footer"] {
 	margin-top: auto;
 
-	.footer_contents {
-		display: grid;
-		grid-template-rows: repeat(3, min-content);
-		grid-auto-columns: 1fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-	}
-
-	.social_links {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-		grid-template-areas: "links newsletter";
-		grid-area: 1 / 1 / 2 / 2;
-	}
-
-	.links {
-		grid-area: links;
-	}
-
-	.newsletter {
-		grid-area: newsletter;
-	}
-
-	.chimebar {
-		grid-area: 2 / 1 / 3 / 2;
-	}
-
-	.legal {
-		grid-area: 3 / 1 / 4 / 2;
-	}
-
-	h2 {
+	& h2 {
 		margin: 0;
-		font-size: 32px;
+		font-size: 1.3rem;
 		padding-bottom: 16px;
 	}
 
-	.footer {
+	& .footer {
 		color: var(--text-link-color);
 		background-color: var(--sitenav-background-color);
 		align-items: center;
 	}
 
-	.social_links {
+	& .links {
+		display: flex;
+		flex-direction: column;
 		justify-self: center;
-		max-width: 800px;
+		text-align: center;
 
-		.links {
-			display: flex;
-			flex-direction: column;
-			justify-self: center;
-			text-align: center;
-			span {
-				font-size: 26px;
-			}
+		& > div {
+			width: min-content;
+			place-self: center;
+		}
 
-			& > div {
-				width: min-content;
-				place-self: center;
-			}
+		& a {
+			padding: 0 2px;
+			width: min-content;
+		}
 
-			a {
-				font-size: 22px;
-				padding: 0 2px;
-				width: min-content;
-			}
-
-			a::before {
-				content: "•";
-				padding: 0 2px;
-			}
+		& a::before {
+			content: "•";
+			padding: 0 2px;
 		}
 	}
 
-	.legal {
+	.links,
+	.newsletter {
+		padding: 0 40px;
+		padding-top: 20px;
+	}
+
+	& .legal {
 		background-color: var(--sitenav-background-color);
 		padding: 4px;
 		margin-top: 32px;
-		columns: 2;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 
-		div {
+		& > * {
+			justify-content: space-between;
+		}
+
+		& div {
 			display: flex;
 			align-items: center;
 		}
 
-		span {
-			font-size: 18px;
+		& span {
 			color: var(--background-color);
 		}
 	}
 
-	.about_template {
+	& .about_template {
 		cursor: pointer;
 
-		img {
+		& img {
 			height: 26px;
 			padding: 4px;
 			width: auto;
 		}
 	}
 
-	.copyright {
+	& .copyright {
 		text-align-last: right;
 	}
 
 	/* Mailchimp */
 
-	#mc_embed_signup {
-		.optionalParent {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-		}
-
-		form {
-			text-align: center;
-		}
+	& #mc_embed_signup form {
+		text-align: center;
 	}
-
-	#mc-embedded-subscribe {
-		font-size: 16px;
+	& #mc-embedded-subscribe {
 		justify-self: flex-end;
 		cursor: pointer;
 	}
 
-	mailchimp .refferal_badge {
+	/*
+	& mailchimp .refferal_badge {
 		height: 20px;
 		margin: 6px;
-	}
+	}*/
 }

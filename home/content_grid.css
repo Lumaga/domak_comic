@@ -1,0 +1,167 @@
+/* variables */
+
+:root {
+	--text-link-color: #da5437;
+	--text-link-color-hover: #572708;
+	--text-emphasis-color: #572708;
+	--text-normal-color: #2e190b;
+
+	--background-color: #fae0c4;
+	--sitenav-background-color: #572708;
+
+	--menu-separator-character: "‖";
+}
+
+body {
+	margin: 0;
+	color: var(--text-normal-color);
+	background-color: var(--background-color);
+}
+
+/* base font size */
+
+html {
+	font-size: 22px;
+}
+
+/*FONTS*/
+
+@font-face {
+	font-family: "Gabriela";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/gabriela/v22/qkBWXvsO6sreR8E-b8m5xLs.woff2)
+		format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+		U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+		U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "EB Garamond";
+	font-style: normal;
+	font-weight: 400 800;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/ebgaramond/v31/SlGUmQSNjdsmc35JDF1K5GR1SDk.woff2)
+		format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+		U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+		U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* emphasis font */
+h1 {
+	font-family: "Gabriela", serif;
+	font-size: 1.5rem;
+}
+
+h2 {
+	font-family: "Gabriela", serif;
+	font-size: 1.1rem;
+}
+
+h3,
+h4,
+h5 {
+	font-family: "Gabriela", serif;
+	font-size: 1rem;
+}
+
+/* body font */
+a,
+li,
+label,
+span,
+input,
+p {
+	font-family: "EB Garamond", serif;
+	font-size: 1rem;
+	font-style: normal;
+}
+
+/* link colors */
+a {
+	color: var(--text-link-color);
+	text-decoration: none;
+	font-weight: bolder;
+}
+
+a:hover {
+	opacity: 0.7;
+}
+
+.content-grid {
+	--padding-inline: 1rem;
+	--content-max-width: 900px;
+	--breakout-max-width: 1200px;
+
+	--breakout-size: calc(
+		(var(--breakout-max-width) - var(--content-max-width)) / 2
+	);
+
+	display: grid;
+	justify-items: center;
+	grid-template-columns:
+		[full-width-start] minmax(var(--padding-inline), 1fr)
+		[breakout-start] minmax(0, var(--breakout-size))
+		[content-start] min(
+			100% - (var(--padding-inline) * 2),
+			var(--content-max-width)
+		)
+		[content-end]
+		minmax(0, var(--breakout-size)) [breakout-end]
+		minmax(var(--padding-inline), 1fr) [full-width-end];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+	grid-column: content;
+}
+
+.content-grid > * {
+	width: -webkit-fill-available;
+}
+
+.content-grid > .breakout {
+	display: grid;
+	grid-column: breakout;
+}
+
+.content-grid > .full-width {
+	grid-column: full-width;
+	display: grid;
+	grid-template-columns: inherit;
+}
+
+layout.flow-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: -webkit-fill-available;
+
+	& > * {
+		max-width: 100%;
+	}
+}
+
+layout.flow-column {
+	display: flex;
+	flex-direction: column;
+	height: -webkit-fill-available;
+
+	& > * {
+		max-width: 100%;
+	}
+}
+
+img.full-width {
+	width: 100%;
+	max-height: 45vh;
+	object-fit: cover;
+}
+
+.hidden {
+	display: none !important;
+}

@@ -8,6 +8,8 @@
 		"livePreview.serverRoot": "/home/",
 		"livePreview.autoRefreshPreview": "On Changes to Saved Files",
 		"livePreview.previewDebounceDelay": 2000,
-		"visual-json.outputPrettiness": 4
+		"visual-json.outputPrettiness": 4,
+		"liveServer.settings.port": 3000,
+		"liveServer.settings.root": "/home"
 	}
 }

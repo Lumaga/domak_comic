@@ -2,6 +2,7 @@ gloomlet_scripts = [];
 gloomlet_names = [];
 
 window.addEventListener("load", function () {
+	return;
 	let html = document.querySelector("html");
 	let scroller = document.querySelector("body");
 
@@ -89,14 +90,14 @@ function wait_for_element(selector, func) {
 	const style = document.createElement("style");
 
 	const keyFrames = `
-      @keyframes ${animationName} {
-        from { opacity: 1; }
-        to { opacity: 1; }
-      }
-      ${selector} {
-        animation-duration: 1ms;
-        animation-name: ${animationName};
-      }
+        @keyframes ${animationName} {
+            from { opacity: 1; }
+            to { opacity: 1; }
+        }
+        ${selector} {
+			animation-duration: 1ms;
+			animation-name: ${animationName};
+        }
     `;
 
 	style.appendChild(new Text(keyFrames));
