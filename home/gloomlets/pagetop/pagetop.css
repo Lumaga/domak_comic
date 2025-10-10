@@ -8,7 +8,7 @@ gloomlet[name="pagetop"] {
 
 	& .background-arch {
 		--inset: 143px;
-		--width: 112;
+		--width: 100;
 		--slice: 1426;
 		border-image: url(/gloomlets/pagetop/header_arch_box.png);
 		border-style: solid;
