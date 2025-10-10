@@ -1,5 +1,4 @@
 class Reader {
-
 	current_page;
 	current_chapter;
 	max_page_number;
@@ -11,7 +10,9 @@ class Reader {
 				this.max_page_number = page_list.length;
 				this._main();
 			} else {
-				const new_url = new URL(window.location.origin + "/db_load_error.html");
+				const new_url = new URL(
+					window.location.origin + "/db_load_error.html"
+				);
 				window.location.assign(new_url);
 			}
 		});
@@ -30,11 +31,15 @@ class Reader {
 		});
 
 		document.body.addEventListener("scroll", (event) => {
-			document.querySelector(".reader_settings").classList.add("hide_dropdown");
+			document
+				.querySelector(".reader_settings")
+				.classList.add("hide_dropdown");
 		});
-		
+
 		document.addEventListener("scroll", (event) => {
-			document.querySelector(".reader_settings").classList.add("hide_dropdown");
+			document
+				.querySelector(".reader_settings")
+				.classList.add("hide_dropdown");
 		});
 
 		this.setup_disqus();
@@ -56,7 +61,7 @@ class Reader {
 				}
 			}
 		}
-	
+
 		// Fill in with stored user preferences, if found
 		if (localStorage.length) {
 			for (const [key, value] of Object.entries(localStorage)) {
@@ -73,11 +78,21 @@ class Reader {
 						break;
 					case "colorize_page":
 						if (localStorage.colorize_page == 1) {
-							console.log("colorize on", localStorage.colorize_page);
-							document.querySelector(".page_container").classList.add("colorize_page");
+							console.log(
+								"colorize on",
+								localStorage.colorize_page
+							);
+							document
+								.querySelector(".page_container")
+								.classList.add("colorize_page");
 						} else {
-							console.log("colorize off", localStorage.colorize_page);
-							document.querySelector(".page_container").classList.remove("colorize_page");
+							console.log(
+								"colorize off",
+								localStorage.colorize_page
+							);
+							document
+								.querySelector(".page_container")
+								.classList.remove("colorize_page");
 						}
 						break;
 					default:
@@ -97,7 +112,8 @@ class Reader {
 		// override it and set to width instead
 		if (
 			window.innerWidth <
-			document.querySelector("#comicpage img").getBoundingClientRect().width
+			document.querySelector("#comicpage img").getBoundingClientRect()
+				.width
 		) {
 			this.set_page_scale("width");
 		}
@@ -122,9 +138,11 @@ class Reader {
 		image_node.setAttribute("src", path);
 		this.update_page_info();
 		this.update_nav_options();
+		this.update_alt_text();
 		this.update_url();
 		const author_notes = document.querySelector(".author_notes .text");
-		author_notes.innerHTML = this.current_page[localStorage.language].comment;
+		author_notes.innerHTML =
+			this.current_page[localStorage.language].comment;
 		const comment_image = document.getElementById("comment_image");
 		if (this.current_page.comment_image != "") {
 			comment_image.src =
@@ -141,6 +159,35 @@ class Reader {
 		try {
 			this._update_disqus();
 		} catch (e) {}
+	}
+
+	update_alt_text() {
+		try {
+			const text = this.current_page[localStorage.language].alt_text;
+			if (text != "") {
+				document
+					.querySelector(".text_description")
+					.classList.remove("hidden");
+				document
+					.querySelector(".text_description_toggle")
+					.classList.remove("hidden");
+				const text_element =
+					document.querySelector(".text_description");
+				text_element.innerHTML = text;
+			} else {
+				document
+					.querySelector(".text_description")
+					.classList.add("hidden");
+				document
+					.querySelector(".text_description_toggle")
+					.classList.add("hidden");
+			}
+		} catch (e) {
+			document.querySelector(".text_description").classList.add("hidden");
+			document
+				.querySelector(".text_description_toggle")
+				.classList.add("hidden");
+		}
 	}
 
 	show_reader_help() {
@@ -168,7 +215,12 @@ class Reader {
 
 	set_page_scale(selection) {
 		const page_el = document.getElementById("comicpage");
-		const fit_list = ["fit_width", "fit_height", "fit_both", "fit_original"];
+		const fit_list = [
+			"fit_width",
+			"fit_height",
+			"fit_both",
+			"fit_original",
+		];
 		switch (selection) {
 			case "height":
 				page_el.classList.remove(...fit_list);
@@ -194,9 +246,13 @@ class Reader {
 		localStorage.colorize_page ^= true;
 		console.log("colorize after", localStorage.colorize_page);
 		if (localStorage.colorize_page == 1) {
-			document.querySelector(".page_container").classList.add("colorize_page");
+			document
+				.querySelector(".page_container")
+				.classList.add("colorize_page");
 		} else {
-			document.querySelector(".page_container").classList.remove("colorize_page");
+			document
+				.querySelector(".page_container")
+				.classList.remove("colorize_page");
 		}
 	}
 
@@ -328,6 +384,7 @@ class Reader {
 	}
 
 	update_url() {
+		return;
 		const new_url = new URL(window.location.origin);
 		new_url.searchParams.set("page", this.current_page.identifier);
 		window.history.pushState(null, "", new_url.toString());
@@ -336,44 +393,46 @@ class Reader {
 	update_language() {
 		this._write_page();
 
-		window.disqus_language = localStorage.language == "es" ? "es_419" : localStorage.language;
+		window.disqus_language =
+			localStorage.language == "es" ? "es_419" : localStorage.language;
 		try {
 			this._update_disqus();
 		} catch (e) {}
-	};
+	}
 
 	setup_disqus() {
 		/**
 		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-		
-			
+
 		window.disqus_config = function () {
 			this.page.url =
-				window.location.origin + `/?page=${window.current_page.identifier}`;
+				window.location.origin +
+				`/?page=${window.current_page.identifier}`;
 			this.page.title = `Domak: Page ${window.current_page.number}`;
 			this.language = window.disqus_language;
 		};
 
-		window.disqus_language = localStorage.language == "es" ? "es_419" : localStorage.language;
+		window.disqus_language =
+			localStorage.language == "es" ? "es_419" : localStorage.language;
 	}
 
-		disqus() {
-			var d = document,
-				s = d.createElement("script")
-			s.src = "https://lumaga-draws.disqus.com/embed.js";
-			s.setAttribute("data-timestamp", +new Date());
-			(d.head || d.body).appendChild(s);
-		}
+	disqus() {
+		var d = document,
+			s = d.createElement("script");
+		s.src = "https://lumaga-draws.disqus.com/embed.js";
+		s.setAttribute("data-timestamp", +new Date());
+		(d.head || d.body).appendChild(s);
+	}
 
-		_update_disqus() {
-			if (!this.disable_disqus) {
-				DISQUS.reset({
-					reload: true,
-					config: disqus_config
-				});
-			}
+	_update_disqus() {
+		if (!this.disable_disqus) {
+			DISQUS.reset({
+				reload: true,
+				config: disqus_config,
+			});
 		}
+	}
 }
 
 const reader = new Reader();

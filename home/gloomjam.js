@@ -2,7 +2,6 @@ gloomlet_scripts = [];
 gloomlet_names = [];
 
 window.addEventListener("load", function () {
-	return;
 	let html = document.querySelector("html");
 	let scroller = document.querySelector("body");
 

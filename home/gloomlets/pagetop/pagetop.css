@@ -1,6 +1,9 @@
 gloomlet[name="pagetop"] {
 	& .header {
 		max-height: 240px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 
 	& .background-arch {
@@ -17,7 +20,9 @@ gloomlet[name="pagetop"] {
 	}
 
 	& .language {
-		position: absolute;
+		margin-bottom: -2rem;
+		height: fit-content;
+		width: fit-content;
 		background-color: var(--background-color);
 		padding: 6px;
 		border-radius: 100vw;
@@ -28,7 +33,7 @@ gloomlet[name="pagetop"] {
 	}
 
 	& .logo {
-		place-self: end;
+		/*place-self: end;*/
 	}
 
 	& .logo img {
