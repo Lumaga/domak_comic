@@ -8,7 +8,7 @@ gloomlet[name="pagetop"] {
 
 	& .background-arch {
 		--inset: 143px;
-		--width: 100;
+		--width: 112;
 		--slice: 1426;
 		border-image: url(/gloomlets/pagetop/header_arch_box.png);
 		border-style: solid;
@@ -16,7 +16,7 @@ gloomlet[name="pagetop"] {
 		border-image-width: 0px var(--width) 0px var(--width);
 		border-image-outset: 0px var(--inset) 0px var(--inset);
 		border-image-repeat: space space;
-		height: 230px;
+		height: 236px;
 	}
 
 	& .language {
@@ -26,6 +26,7 @@ gloomlet[name="pagetop"] {
 		background-color: var(--background-color);
 		padding: 6px;
 		border-radius: 100vw;
+		z-index: 5;
 
 		& a {
 			cursor: pointer;
@@ -33,6 +34,12 @@ gloomlet[name="pagetop"] {
 	}
 
 	& .logo {
+		display: flex;
+
+		& a {
+			opacity: 1;
+		}
+
 		/*place-self: end;*/
 	}
 
