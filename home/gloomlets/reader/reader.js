@@ -144,6 +144,11 @@ class Reader {
 		author_notes.innerHTML =
 			this.current_page[localStorage.language].comment;
 		const comment_image = document.getElementById("comment_image");
+		if (this.current_page[localStorage.language].comment == "" && this.current_page.comment_image == "") {
+			document.querySelector(".author_notes").classList.add("hidden");
+		} else {
+			document.querySelector(".author_notes").classList.remove("hidden");
+		}
 		if (this.current_page.comment_image != "") {
 			comment_image.src =
 				"comic/" +
