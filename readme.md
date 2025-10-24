@@ -87,3 +87,5 @@ An example of a folder would look like this:
             ├─ footer.js
 
 When creating HTML for a Gloomlet, you can nest other Gloomlets with no restrictions. Any time an element is needed more than once, it would be advisible to create a Gloomlet for it.
+
+...
