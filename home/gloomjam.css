@@ -121,6 +121,7 @@ a:hover {
 
 .content-grid > * {
 	width: -webkit-fill-available;
+	width: -moz-available;
 }
 
 .content-grid > .breakout {
@@ -140,6 +141,7 @@ layout.flow-row {
 	justify-content: center;
 	flex-wrap: wrap;
 	width: -webkit-fill-available;
+	width: -moz-available;
 
 	& > * {
 		max-width: 100%;
@@ -150,6 +152,7 @@ layout.flow-column {
 	display: flex;
 	flex-direction: column;
 	height: -webkit-fill-available;
+	width: -moz-available;
 
 	& > * {
 		max-width: 100%;

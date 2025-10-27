@@ -2,7 +2,6 @@ class Reader {
 	current_page;
 	current_chapter;
 	max_page_number;
-	disable_disqus = false;
 
 	constructor() {
 		load_db().then((success) => {
@@ -41,8 +40,6 @@ class Reader {
 				.querySelector(".reader_settings")
 				.classList.add("hide_dropdown");
 		});
-
-		this.setup_disqus();
 	}
 
 	async _main() {
@@ -119,9 +116,6 @@ class Reader {
 		}
 
 		this.update_url();
-		if (!this.disable_disqus) {
-			this.disqus();
-		}
 	}
 
 	async set_current_page(page_obj) {
@@ -144,6 +138,11 @@ class Reader {
 		author_notes.innerHTML =
 			this.current_page[localStorage.language].comment;
 		const comment_image = document.getElementById("comment_image");
+		if (this.current_page[localStorage.language].comment == "" && this.current_page.comment_image == "") {
+			document.querySelector(".author_notes").classList.add("hidden");
+		} else {
+			document.querySelector(".author_notes").classList.remove("hidden");
+		}
 		if (this.current_page.comment_image != "") {
 			comment_image.src =
 				"comic/" +
@@ -155,10 +154,6 @@ class Reader {
 			comment_image.removeAttribute("src");
 			comment_image.classList.add("hidden");
 		}
-
-		try {
-			this._update_disqus();
-		} catch (e) {}
 	}
 
 	update_alt_text() {
@@ -392,46 +387,6 @@ class Reader {
 
 	update_language() {
 		this._write_page();
-
-		window.disqus_language =
-			localStorage.language == "es" ? "es_419" : localStorage.language;
-		try {
-			this._update_disqus();
-		} catch (e) {}
-	}
-
-	setup_disqus() {
-		/**
-		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-
-		window.disqus_config = function () {
-			this.page.url =
-				window.location.origin +
-				`/?page=${window.current_page.identifier}`;
-			this.page.title = `Domak: Page ${window.current_page.number}`;
-			this.language = window.disqus_language;
-		};
-
-		window.disqus_language =
-			localStorage.language == "es" ? "es_419" : localStorage.language;
-	}
-
-	disqus() {
-		var d = document,
-			s = d.createElement("script");
-		s.src = "https://lumaga-draws.disqus.com/embed.js";
-		s.setAttribute("data-timestamp", +new Date());
-		(d.head || d.body).appendChild(s);
-	}
-
-	_update_disqus() {
-		if (!this.disable_disqus) {
-			DISQUS.reset({
-				reload: true,
-				config: disqus_config,
-			});
-		}
 	}
 }
 

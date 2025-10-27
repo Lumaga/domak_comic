@@ -272,26 +272,4 @@ gloomlet[name="reader"] {
 			float: inline-end;
 		}
 	}
-
-	/*DISQUS COMMENT SECTION*/
-
-	.comments {
-		text-align: center;
-		margin-top: 20px;
-		/*max-width: 800px;*/
-		/*min-width: 400px;*/
-		min-height: 525px;
-		padding: 10px 20px;
-		align-self: center;
-		width: -webkit-fill-available;
-		width: -moz-available;
-	}
-
-	#reactions * {
-		padding: 0;
-	}
-
-	#reactions__container .text-bold {
-		display: none;
-	}
 }

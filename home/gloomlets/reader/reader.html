@@ -89,15 +89,19 @@
 			</layout>
 		</div>
 		<div class="page_container">
-			<div id="comicpage" class="comicpage fit_both ninepatch_paper">
+			<div id="comicpage" role="document" class="comicpage fit_both ninepatch_paper">
 				<img
 					src="/gloomlets/reader/blank_page.png"
 					onclick="reader.on_click_page(event)"
+					tabindex=0
+					aria-describedby="author_notes_text"
 				/>
 				<img
 					src="/gloomlets/reader/reader_help.png"
 					class="reader_help hidden"
+					tabindex=0
 					onclick="this.classList.add('hidden')"
+					alt="Help image"
 				/>
 			</div>
 			<div
@@ -152,9 +156,6 @@
 		<div class="author_notes ninepatch_box">
 			<p class="text"></p>
 			<img id="comment_image" />
-		</div>
-		<div class="comments ninepatch_paper">
-			<div id="disqus_thread"></div>
 		</div>
 	</layout>
 </div>
